@@ -37,7 +37,6 @@ public class WobUtils {
 
   private final String SAVE_TO_WALLET = "savetowallet";
   private final String LOYALTY_WEB = "loyaltywebservice";
-  private final String WOB_SANDBOX = "https://www.googleapis.com/auth/wallet_object_sandbox.issuer";
   private final String WOB_PROD = "https://www.googleapis.com/auth/wallet_object.issuer";
   
   private String serviceAccountId;
@@ -98,7 +97,6 @@ public class WobUtils {
    */
   public GoogleCredential getCredential() throws GeneralSecurityException, IOException{ 
     List<String> scopes = new ArrayList<String>();
-    scopes.add(WOB_SANDBOX);
     scopes.add(WOB_PROD);
     
     return credential = new GoogleCredential.Builder().setTransport(httpTransport)
