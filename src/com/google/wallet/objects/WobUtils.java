@@ -39,7 +39,6 @@ public class WobUtils {
   private final String LOYALTY_WEB = "loyaltywebservice";
   private final String WOB_SANDBOX = "https://www.googleapis.com/auth/wallet_object_sandbox.issuer";
   private final String WOB_PROD = "https://www.googleapis.com/auth/wallet_object.issuer";
-  private final String SANDBOX_URL = "https://www-googleapis-staging.sandbox.google.com/";
   
   private String serviceAccountId;
   private String rsaKeyPath;
@@ -87,7 +86,6 @@ public class WobUtils {
     credential = getCredential();
     
     return new Walletobjects.Builder(httpTransport, jsonFactory, credential)
-      //.setRootUrl(SANDBOX_URL)
       .setApplicationName(applicationName)
       .build(); 
   }
