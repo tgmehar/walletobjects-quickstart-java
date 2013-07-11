@@ -25,18 +25,18 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</welcome-file-list>
 	<context-param>
 	    <param-name>ServiceAccountId</param-name>
-	    <param-value>Your Service Account ID</param-value>
+	    <param-value>765560632621-v9ktieri5cm5rjblr06teo1th8fts7ha@developer.gserviceaccount.com</param-value>
 	</context-param>
 	<context-param>
 	    <param-name>RsaKeyPath</param-name>
-	    <param-value>Your key.p12 path</param-value>
+	    <param-value>key.p12</param-value>
 	</context-param>
 	<context-param>
 	    <param-name>IssuerId</param-name>
-	    <param-value>Your Issuer ID</param-value>
+	    <param-value>2949532193301582354</param-value>
 	</context-param>
 	<context-param>
 	    <param-name>ApplicationName</param-name>
-	    <param-value>Your application name</param-value>
+	    <param-value>Baconrista</param-value>
 	</context-param>
 </web-app>

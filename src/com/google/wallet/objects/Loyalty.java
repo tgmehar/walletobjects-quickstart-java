@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.api.services.walletobjects.model.Barcode;
+import com.google.api.services.walletobjects.model.DateTime;
 import com.google.api.services.walletobjects.model.Image;
 import com.google.api.services.walletobjects.model.LatLongPoint;
 import com.google.api.services.walletobjects.model.LoyaltyClass;
@@ -11,6 +12,7 @@ import com.google.api.services.walletobjects.model.LoyaltyObject;
 import com.google.api.services.walletobjects.model.LoyaltyPoints;
 import com.google.api.services.walletobjects.model.LoyaltyPointsBalance;
 import com.google.api.services.walletobjects.model.RenderSpec;
+import com.google.api.services.walletobjects.model.TimeInterval;
 import com.google.api.services.walletobjects.model.TypedValue;
 import com.google.api.services.walletobjects.model.Uri;
 import com.google.api.services.walletobjects.model.WalletObjectMessage;
@@ -45,7 +47,7 @@ public class Loyalty {
     LoyaltyPoints points = new LoyaltyPoints()
       .setLabel("Points")
       .setBalance(new LoyaltyPointsBalance().setString("500"))
-      //.setPointsValidInterval(new TimeInterval().setEnd(new DateTime().setDate(com.google.api.client.util.DateTime.parseRfc3339("2011-06-03T10:00:00.000-07:00"))))
+      .setPointsValidInterval(new TimeInterval().setEnd(new DateTime().setDate(com.google.api.client.util.DateTime.parseRfc3339("2011-06-03T10:00:00.000-07:00"))))
       .setPointsType("rewards");
     
     //Define IssuerData

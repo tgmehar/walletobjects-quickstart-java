@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.services.walletobjects.model.LoyaltyObject;
 import com.google.wallet.objects.Loyalty;
 import com.google.wallet.objects.WobUtils;
@@ -46,7 +47,6 @@ public class WobGenerateJwtServlet extends HttpServlet{
     origins.add("https://localhost:8888");
     
     LoyaltyObject loyaltyObject = Loyalty.generateLoyaltyObject(utils.getIssuerId(), "ExampleClass1", "ExampleObject1");
-    
     
     String jwt = null;
     try {

@@ -123,6 +123,7 @@ public class WobUtils {
   }
   
   /**
+   * Generates the linking/signup JWT from a Wallet Object
    * 
    * @param object
    * @param resp
@@ -130,6 +131,7 @@ public class WobUtils {
    * @throws SignatureException
    */
   public String generateSignupJwt(GenericJson object, WebServiceResponse resp) throws SignatureException{   
+    object.setFactory(new GsonFactory());
     JsonToken token = new JsonToken(signer);
     token.setAudience("google");
     token.setParam("typ", LOYALTY_WEB);
@@ -143,24 +145,41 @@ public class WobUtils {
     return token.serializeAndSign();     
   }
   
+  /**
+   * Generates the Save to Wallet JWT from a Wallet Object
+   * 
+   * @param object
+   * @param origins
+   * @return
+   * @throws SignatureException
+   */
   public String generateSaveJwt(GenericJson object, List<String> origins) throws SignatureException{
+    object.setFactory(jsonFactory);
     JsonToken token = new JsonToken(signer);
     token.setAudience("google");
     token.setParam("typ", SAVE_TO_WALLET);
     token.setIssuedAt(new Instant(Calendar.getInstance().getTimeInMillis() - 5000L));
     Gson gson = new Gson();
     WobPayload s2w = new WobPayload();
-    s2w.addLoyaltyObject(object);
+    s2w.addLoyaltyObject(gson.fromJson(object.toString(), GenericJson.class));
     JsonObject obj = gson.toJsonTree(s2w).getAsJsonObject();
     token.getPayloadAsJsonObject().add("payload", obj);
     token.getPayloadAsJsonObject().add("origins", gson.toJsonTree(origins));
     return token.serializeAndSign();    
   }
   
+  /**
+   * 
+   * @return
+   */
   public String getServiceAccountId() {
     return serviceAccountId;
   }
 
+  /**
+   * 
+   * @return
+   */
   public Long getIssuerId() {
     return issuerId;
   }
