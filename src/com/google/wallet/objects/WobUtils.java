@@ -162,9 +162,8 @@ public class WobUtils {
     token.setIssuedAt(new Instant(Calendar.getInstance().getTimeInMillis() - 5000L));
     Gson gson = new Gson();
     WobPayload s2w = new WobPayload();
-    //s2w.addLoyaltyObject(gson.fromJson(object.toString(), GenericJson.class));
- 
-    s2w.addOfferObject(gson.fromJson(object.toString(), GenericJson.class));
+    s2w.addLoyaltyObject(gson.fromJson(object.toString(), GenericJson.class));
+    //s2w.addOfferObject(gson.fromJson(object.toString(), GenericJson.class));
     JsonObject obj = gson.toJsonTree(s2w).getAsJsonObject();
     token.getPayloadAsJsonObject().add("payload", obj);
     token.getPayloadAsJsonObject().add("origins", gson.toJsonTree(origins));
