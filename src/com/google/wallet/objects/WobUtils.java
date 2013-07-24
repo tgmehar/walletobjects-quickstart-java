@@ -29,6 +29,7 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.client.util.SecurityUtils;
 import com.google.api.services.walletobjects.Walletobjects;
+import com.google.api.services.walletobjects.model.OfferObject;
 import com.google.common.io.ByteStreams;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -62,7 +63,7 @@ public class WobUtils {
    */
   public WobUtils(ServletContext context) throws FileNotFoundException, IOException, KeyStoreException, GeneralSecurityException{  
     serviceAccountId = context.getInitParameter("ServiceAccountId");
-    rsaKeyPath = context.getInitParameter("RsaKeyPath");
+    rsaKeyPath = context.getInitParameter("ServiceAccountPrivateKey");
     applicationName = context.getInitParameter("ApplicationName");
     issuerId = Long.decode(context.getInitParameter("IssuerId"));
     httpTransport = new NetHttpTransport();
@@ -138,7 +139,7 @@ public class WobUtils {
     token.setIssuedAt(new Instant(Calendar.getInstance().getTimeInMillis() - 5000L));
     Gson gson = new Gson();
     WobPayload payload = new WobPayload();
-    payload.addLoyaltyObject(object);
+    payload.addLoyaltyObject(gson.fromJson(object.toString(), GenericJson.class));
     JsonObject obj = gson.toJsonTree(payload).getAsJsonObject();
     token.getPayloadAsJsonObject().add("payload", obj);
     token.getPayloadAsJsonObject().add("webserviceResponse", gson.toJsonTree(resp));
@@ -161,7 +162,9 @@ public class WobUtils {
     token.setIssuedAt(new Instant(Calendar.getInstance().getTimeInMillis() - 5000L));
     Gson gson = new Gson();
     WobPayload s2w = new WobPayload();
-    s2w.addLoyaltyObject(gson.fromJson(object.toString(), GenericJson.class));
+    //s2w.addLoyaltyObject(gson.fromJson(object.toString(), GenericJson.class));
+ 
+    s2w.addOfferObject(gson.fromJson(object.toString(), GenericJson.class));
     JsonObject obj = gson.toJsonTree(s2w).getAsJsonObject();
     token.getPayloadAsJsonObject().add("payload", obj);
     token.getPayloadAsJsonObject().add("origins", gson.toJsonTree(origins));
