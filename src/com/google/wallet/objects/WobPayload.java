@@ -18,7 +18,7 @@ public class WobPayload {
   private List<GenericJson> genericObjects;
   private List<GenericJson> boardingPassObjects;
   
-  private WebServiceResponse response;
+  private WebServiceResponse webserviceResponse;
   
 	public WobPayload(){}
 
@@ -68,11 +68,11 @@ public class WobPayload {
   }
 
   public WebServiceResponse getResponse() {
-    return response;
+    return webserviceResponse;
   }
 
   public void setResponse(WebServiceResponse resp) {
-    this.response = resp;
+    this.webserviceResponse = resp;
   }
 
   public List<GenericJson> getBoardingPassObjects() {
