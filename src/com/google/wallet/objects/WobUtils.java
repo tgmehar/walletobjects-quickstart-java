@@ -29,6 +29,9 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.client.util.SecurityUtils;
 import com.google.api.services.walletobjects.Walletobjects;
+import com.google.api.services.walletobjects.model.BoardingPassObject;
+import com.google.api.services.walletobjects.model.GenericObject;
+import com.google.api.services.walletobjects.model.LoyaltyObject;
 import com.google.api.services.walletobjects.model.OfferObject;
 import com.google.common.io.ByteStreams;
 import com.google.gson.Gson;
@@ -139,10 +142,20 @@ public class WobUtils {
     token.setIssuedAt(new Instant(Calendar.getInstance().getTimeInMillis() - 5000L));
     Gson gson = new Gson();
     WobPayload payload = new WobPayload();
-    payload.addLoyaltyObject(gson.fromJson(object.toString(), GenericJson.class));
+
+    if (LoyaltyObject.class.isAssignableFrom(object.getClass())){
+      payload.addLoyaltyObject(gson.fromJson(object.toString(), GenericJson.class));
+    } else if (OfferObject.class.isAssignableFrom(object.getClass())){
+      payload.addOfferObject(gson.fromJson(object.toString(), GenericJson.class));
+    } else if(GenericObject.class.isAssignableFrom(object.getClass())){
+      payload.addGenericObject(gson.fromJson(object.toString(), GenericJson.class));
+    } else if(BoardingPassObject.class.isAssignableFrom(object.getClass())){
+      payload.addBoardingPassObject(gson.fromJson(object.toString(), GenericJson.class));
+    }
+    
+    payload.setResponse(resp);
     JsonObject obj = gson.toJsonTree(payload).getAsJsonObject();
     token.getPayloadAsJsonObject().add("payload", obj);
-    token.getPayloadAsJsonObject().add("webserviceResponse", gson.toJsonTree(resp));
     return token.serializeAndSign();     
   }
   
@@ -162,8 +175,17 @@ public class WobUtils {
     token.setIssuedAt(new Instant(Calendar.getInstance().getTimeInMillis() - 5000L));
     Gson gson = new Gson();
     WobPayload s2w = new WobPayload();
-    s2w.addLoyaltyObject(gson.fromJson(object.toString(), GenericJson.class));
-    //s2w.addOfferObject(gson.fromJson(object.toString(), GenericJson.class));
+    
+    if (LoyaltyObject.class.isAssignableFrom(object.getClass())){
+      s2w.addLoyaltyObject(gson.fromJson(object.toString(), GenericJson.class));
+    } else if (OfferObject.class.isAssignableFrom(object.getClass())){
+      s2w.addOfferObject(gson.fromJson(object.toString(), GenericJson.class));
+    } else if(GenericObject.class.isAssignableFrom(object.getClass())){
+      s2w.addGenericObject(gson.fromJson(object.toString(), GenericJson.class));
+    } else if(BoardingPassObject.class.isAssignableFrom(object.getClass())){
+      s2w.addBoardingPassObject(gson.fromJson(object.toString(), GenericJson.class));
+    }
+    
     JsonObject obj = gson.toJsonTree(s2w).getAsJsonObject();
     token.getPayloadAsJsonObject().add("payload", obj);
     token.getPayloadAsJsonObject().add("origins", gson.toJsonTree(origins));

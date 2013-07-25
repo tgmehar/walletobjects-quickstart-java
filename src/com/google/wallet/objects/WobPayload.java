@@ -16,6 +16,9 @@ public class WobPayload {
 	private List<GenericJson> loyaltyObjects;
   private List<GenericJson> offerObjects;
   private List<GenericJson> genericObjects;
+  private List<GenericJson> boardingPassObjects;
+  
+  private WebServiceResponse response;
   
 	public WobPayload(){}
 
@@ -62,5 +65,28 @@ public class WobPayload {
 
   public void setGenericObjects(List<GenericJson> genericObject) {
     this.genericObjects = genericObject;
+  }
+
+  public WebServiceResponse getResponse() {
+    return response;
+  }
+
+  public void setResponse(WebServiceResponse resp) {
+    this.response = resp;
+  }
+
+  public List<GenericJson> getBoardingPassObjects() {
+    return boardingPassObjects;
+  }
+
+  public void setBoardingPassObjects(List<GenericJson> boardingPassObjects) {
+    this.boardingPassObjects = boardingPassObjects;
+  }
+  
+  public void addBoardingPassObject(GenericJson object){
+    if (boardingPassObjects == null){
+      boardingPassObjects = new ArrayList<GenericJson>();
+    }
+    boardingPassObjects.add(object);
   }
 }
