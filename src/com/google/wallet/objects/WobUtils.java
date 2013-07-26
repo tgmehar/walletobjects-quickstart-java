@@ -151,7 +151,8 @@ public class WobUtils {
       payload.addGenericObject(gson.fromJson(object.toString(), GenericJson.class));
     } else if(BoardingPassObject.class.isAssignableFrom(object.getClass())){
       payload.addBoardingPassObject(gson.fromJson(object.toString(), GenericJson.class));
-    }
+    } else 
+      throw new IllegalArgumentException("Invalid Object type: " + object.getClass());
     
     payload.setResponse(resp);
     JsonObject obj = gson.toJsonTree(payload).getAsJsonObject();
@@ -184,7 +185,8 @@ public class WobUtils {
       s2w.addGenericObject(gson.fromJson(object.toString(), GenericJson.class));
     } else if(BoardingPassObject.class.isAssignableFrom(object.getClass())){
       s2w.addBoardingPassObject(gson.fromJson(object.toString(), GenericJson.class));
-    }
+    } else 
+      throw new IllegalArgumentException("Invalid Object type: " + object.getClass());
     
     JsonObject obj = gson.toJsonTree(s2w).getAsJsonObject();
     token.getPayloadAsJsonObject().add("payload", obj);
