@@ -134,7 +134,7 @@ public class WobUtils {
    * @return
    * @throws SignatureException
    */
-  public String generateSignupJwt(GenericJson object, WebServiceResponse resp) throws SignatureException{   
+  public String generateWebserviceResponseJwt(GenericJson object, WebServiceResponse resp) throws SignatureException{   
     object.setFactory(new GsonFactory());
     JsonToken token = new JsonToken(signer);
     token.setAudience("google");
