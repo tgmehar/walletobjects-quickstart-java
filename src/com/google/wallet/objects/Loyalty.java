@@ -173,6 +173,7 @@ public class Loyalty {
       .setAccountIdLabel("Member Id")
       .setRenderSpecs(renderSpec)
       .setMessages(messages)
+      .setReviewStatus("draft")
       .setAllowMultipleUsersPerObject(true)
       .setLocations(locations)
       .setIssuerData(issuerData);
