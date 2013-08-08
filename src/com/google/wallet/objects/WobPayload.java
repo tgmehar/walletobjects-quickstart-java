@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.api.client.json.GenericJson;
+import com.google.wallet.objects.webservice.WebserviceResponse;
 
 /**
  * Bean to represent the Wob payload object
@@ -18,7 +19,7 @@ public class WobPayload {
   private List<GenericJson> genericObjects;
   private List<GenericJson> boardingPassObjects;
   
-  private WebServiceResponse webserviceResponse;
+  private WebserviceResponse webserviceResponse;
   
 	public WobPayload(){}
 
@@ -67,11 +68,11 @@ public class WobPayload {
     this.genericObjects = genericObject;
   }
 
-  public WebServiceResponse getResponse() {
+  public WebserviceResponse getResponse() {
     return webserviceResponse;
   }
 
-  public void setResponse(WebServiceResponse resp) {
+  public void setResponse(WebserviceResponse resp) {
     this.webserviceResponse = resp;
   }
 

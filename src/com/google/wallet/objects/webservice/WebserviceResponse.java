@@ -1,16 +1,16 @@
-package com.google.wallet.objects;
+package com.google.wallet.objects.webservice;
 
-public class WebServiceResponse {
+public class WebserviceResponse {
   String message;
   String result;
-  
-  public WebServiceResponse(){}
- 
-  public WebServiceResponse(String message, String Result){
+
+  public WebserviceResponse(){}
+
+  public WebserviceResponse(String message, String result){
     setMessage(message);
     setResult(result);
   }
-  
+
   public String getMessage() {
     return message;
   }
