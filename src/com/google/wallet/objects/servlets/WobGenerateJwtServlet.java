@@ -54,7 +54,7 @@ public class WobGenerateJwtServlet extends HttpServlet{
     List<String> origins = new ArrayList<String>();
     origins.add("http://localhost:8888");
     origins.add("https://localhost:8888");
-    origins.add("https://wobs-quickstart.googleplex.com");
+    origins.add("https://wobs-quickstart.appspot.com");
 
     WobPayload payload = new WobPayload();
 

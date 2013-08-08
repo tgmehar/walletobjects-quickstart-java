@@ -27,8 +27,9 @@ public class WobPayload {
   private List<GenericJson> boardingPassObjects;
 
   private WebserviceResponse webserviceResponse;
-  Gson gson = new Gson();
-  JsonFactory jsonFactory = new GsonFactory();
+
+  private transient Gson gson = new Gson();
+  private transient JsonFactory jsonFactory = new GsonFactory();
 
   public WobPayload(){}
 

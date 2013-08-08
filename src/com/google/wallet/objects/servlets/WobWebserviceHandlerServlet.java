@@ -70,20 +70,19 @@ public class WobWebserviceHandlerServlet extends HttpServlet {
       e.printStackTrace();
     }
 
-    if(webRequest.getMethod().equals("signup"))
+    if (webRequest.getMethod().equals("signup"))
       webResponse = new WebserviceResponse("Welcome to baconrista", "approved");
     else
       webResponse = new WebserviceResponse("Thanks for linking to baconrista",
           "approved");
 
     String linkId = webRequest.getParams().getLinkingId();
-    LoyaltyObject loyaltyObject =
-        Loyalty.generateLoyaltyObject(utils.getIssuerId(), "LoyaltyClass",
-            ( linkId!= null) ? linkId:"LoyaltyObject");
+    LoyaltyObject loyaltyObject = Loyalty.generateLoyaltyObject(utils
+        .getIssuerId(), "LoyaltyClass", (linkId != null) ? linkId
+        : "LoyaltyObject");
 
     try {
-      jwt = utils.generateWebserviceResponseJwt(loyaltyObject,
-          webResponse);
+      jwt = utils.generateWebserviceResponseJwt(loyaltyObject, webResponse);
     } catch (SignatureException e) {
       e.printStackTrace();
     }
