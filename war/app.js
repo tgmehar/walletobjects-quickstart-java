@@ -8,18 +8,18 @@ var failureHandler = function(params){
 
 function init(){
   document.getElementById("insert").addEventListener("click", function(){
-    $.get("insert", function(data){
+    $.get("insert?type=loyalty", function(data){
       console.log(data);
     })
   });
 
-  $.get("jwt", function(data){
+  $.get("jwt?type=loyalty", function(data){
     saveToWallet = document.createElement("g:savetowallet");
     saveToWallet.setAttribute("jwt", data);
     saveToWallet.setAttribute("onsuccess","successHandler");
     saveToWallet.setAttribute("onfailure","failureHandler");
     document.body.appendChild(saveToWallet);
-    
+
     script = document.createElement("script");
     script.src = "https://apis.google.com/js/plusone.js";
     document.head.appendChild(script);

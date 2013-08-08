@@ -8,23 +8,33 @@ import java.security.KeyStoreException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.*;
 
+import com.google.api.client.json.GenericJson;
 import com.google.api.services.walletobjects.Walletobjects;
 import com.google.api.services.walletobjects.model.LoyaltyClass;
-import com.google.gson.Gson;
-import com.google.wallet.objects.Loyalty;
-import com.google.wallet.objects.WobUtils;
+import com.google.api.services.walletobjects.model.OfferClass;
+import com.google.wallet.objects.utils.WobCredentials;
+import com.google.wallet.objects.utils.WobUtils;
+import com.google.wallet.objects.verticals.Loyalty;
+import com.google.wallet.objects.verticals.Offer;
 
 @SuppressWarnings("serial")
 public class WobInsertServlet extends HttpServlet {
 
   public void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws IOException {
-    
+
     ServletContext context = getServletContext();
+
+    WobCredentials credentials = new WobCredentials(
+        context.getInitParameter("ServiceAccountId"),
+        context.getInitParameter("ServiceAccountPrivateKey"),
+        context.getInitParameter("ApplicationName"),
+        context.getInitParameter("IssuerId"));
+
     WobUtils utils = null;
     Walletobjects client = null;
     try {
-      utils = new WobUtils(context);
+      utils = new WobUtils(credentials);
       client = utils.getClient();
     } catch (KeyStoreException e) {
       // TODO Auto-generated catch block
@@ -36,12 +46,26 @@ public class WobInsertServlet extends HttpServlet {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
-    
-    LoyaltyClass loyaltyClass = Loyalty.generateLoyaltyClass(utils.getIssuerId(), "ExampleClass1");
-    LoyaltyClass insertResponse = client.loyaltyclass().insert(loyaltyClass).execute();
-    Gson gson = new Gson();
-    
+
+    String type = req.getParameter("type");
+
+    GenericJson response = null;
+
+    if (type.equals("loyalty")) {
+      LoyaltyClass loyaltyClass =
+          Loyalty.generateLoyaltyClass(utils.getIssuerId(), "LoyaltyClass");
+      response = client.loyaltyclass().insert(loyaltyClass).execute();
+    } else if (type.equals("offer")) {
+      OfferClass offerClass =
+          Offer.generateOfferClass(utils.getIssuerId(), "OfferClass");
+      response = client.offerclass().insert(offerClass).execute();
+    } else if (type.equals("generic")) {
+
+    } else if (type.equals("boardingpass")) {
+
+    }
+
     PrintWriter out = resp.getWriter();
-    out.write(gson.toJson(insertResponse));
+    out.write(response.toString());
   }
 }

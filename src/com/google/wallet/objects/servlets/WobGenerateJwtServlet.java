@@ -14,20 +14,27 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.api.client.json.gson.GsonFactory;
-import com.google.api.services.walletobjects.model.LoyaltyObject;
-import com.google.wallet.objects.Loyalty;
-import com.google.wallet.objects.WobUtils;
+import com.google.wallet.objects.utils.WobCredentials;
+import com.google.wallet.objects.utils.WobPayload;
+import com.google.wallet.objects.utils.WobUtils;
+import com.google.wallet.objects.verticals.Loyalty;
+import com.google.wallet.objects.verticals.Offer;
 
 @SuppressWarnings("serial")
 public class WobGenerateJwtServlet extends HttpServlet{
   public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException{
     ServletContext context = getServletContext();
-    
+
+    WobCredentials credentials = new WobCredentials(
+        context.getInitParameter("ServiceAccountId"),
+        context.getInitParameter("ServiceAccountPrivateKey"),
+        context.getInitParameter("ApplicationName"),
+        context.getInitParameter("IssuerId"));
+
     WobUtils utils = null;
-    
+
     try {
-      utils = new WobUtils(context);
+      utils = new WobUtils(credentials);
     } catch (FileNotFoundException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -41,24 +48,34 @@ public class WobGenerateJwtServlet extends HttpServlet{
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
-    
+
+    String type = req.getParameter("type");
+
     List<String> origins = new ArrayList<String>();
     origins.add("http://localhost:8888");
     origins.add("https://localhost:8888");
-    
-    LoyaltyObject loyaltyObject = Loyalty.generateLoyaltyObject(utils.getIssuerId(), "ExampleClass1", "ExampleObject1");
-    
+    origins.add("https://wobs-quickstart.googleplex.com");
+
+    WobPayload payload = new WobPayload();
+
+    if (type.equals("loyalty")) {
+      payload.addObject(Loyalty.generateLoyaltyObject(utils.getIssuerId(),
+          "LoyaltyClass", "LoyaltyObject"));
+    } else if (type.equals("offer")) {
+      payload.addObject(Offer.generateOfferObject(utils.getIssuerId(),
+          "OfferClass", "OfferObject"));
+    }
+
     String jwt = null;
     try {
-      jwt = utils.generateSaveJwt(loyaltyObject, origins);
+      jwt = utils.generateSaveJwt(payload, origins);
     } catch (SignatureException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
-    
+
     PrintWriter out = resp.getWriter();
     out.write(jwt);
   }
-  
-  
+
+
 }

@@ -16,8 +16,9 @@ import com.google.api.services.walletobjects.model.LoyaltyObject;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
-import com.google.wallet.objects.Loyalty;
-import com.google.wallet.objects.WobUtils;
+import com.google.wallet.objects.utils.WobCredentials;
+import com.google.wallet.objects.utils.WobUtils;
+import com.google.wallet.objects.verticals.Loyalty;
 import com.google.wallet.objects.webservice.WebserviceRequest;
 import com.google.wallet.objects.webservice.WebserviceResponse;
 
@@ -34,6 +35,13 @@ public class WobWebserviceHandlerServlet extends HttpServlet {
   public void doPost(HttpServletRequest req, HttpServletResponse resp) {
     Gson gson = new Gson();
     ServletContext context = getServletContext();
+
+    WobCredentials credentials = new WobCredentials(
+        context.getInitParameter("ServiceAccountId"),
+        context.getInitParameter("ServiceAccountPrivateKey"),
+        context.getInitParameter("ApplicationName"),
+        context.getInitParameter("IssuerId"));
+
     WobUtils utils = null;
     WebserviceRequest webRequest = null;
     WebserviceResponse webResponse = null;
@@ -42,7 +50,7 @@ public class WobWebserviceHandlerServlet extends HttpServlet {
 
     try {
       webRequest = gson.fromJson(req.getReader(), WebserviceRequest.class);
-      utils = new WobUtils(context);
+      utils = new WobUtils(credentials);
       out = resp.getWriter();
     } catch (FileNotFoundException e) {
       // TODO Auto-generated catch block
@@ -70,8 +78,8 @@ public class WobWebserviceHandlerServlet extends HttpServlet {
 
     String linkId = webRequest.getParams().getLinkingId();
     LoyaltyObject loyaltyObject =
-        Loyalty.generateLoyaltyObject(utils.getIssuerId(), "ExampleClass",
-            ( linkId!= null) ? linkId:"ExampleObject");
+        Loyalty.generateLoyaltyObject(utils.getIssuerId(), "LoyaltyClass",
+            ( linkId!= null) ? linkId:"LoyaltyObject");
 
     try {
       jwt = utils.generateWebserviceResponseJwt(loyaltyObject,
