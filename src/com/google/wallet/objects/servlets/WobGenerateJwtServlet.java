@@ -17,12 +17,15 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.wallet.objects.utils.WobCredentials;
 import com.google.wallet.objects.utils.WobPayload;
 import com.google.wallet.objects.utils.WobUtils;
+import com.google.wallet.objects.verticals.BoardingPass;
+import com.google.wallet.objects.verticals.Generic;
 import com.google.wallet.objects.verticals.Loyalty;
 import com.google.wallet.objects.verticals.Offer;
 
 @SuppressWarnings("serial")
-public class WobGenerateJwtServlet extends HttpServlet{
-  public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException{
+public class WobGenerateJwtServlet extends HttpServlet {
+  public void doGet(HttpServletRequest req, HttpServletResponse resp)
+      throws IOException {
     ServletContext context = getServletContext();
 
     WobCredentials credentials = new WobCredentials(
@@ -65,8 +68,22 @@ public class WobGenerateJwtServlet extends HttpServlet{
     } else if (type.equals("offer")) {
       payload.addObject(Offer.generateOfferObject(utils.getIssuerId(),
           "OfferClass", "OfferObject"));
-    }
+    } else if (type.equals("generic")) {
+      payload.addObject(Generic.generateGenericObject(utils.getIssuerId(),
+          "GenericClass", "GenericObject"));
+    } else if (type.equals("boardingpass")) {
+      payload.addObject(BoardingPass.generateBoardingPassClass(
+          utils.getIssuerId(), "BoardingPassClassFirstLeg"));
+      payload.addObject(BoardingPass.generateBoardingPassObject(
+          utils.getIssuerId(), "BoardingPassClassFirstLeg",
+          "BoardingPassObjectFirstLeg"));
 
+      payload.addObject(BoardingPass.generateBoardingPassClass(
+          utils.getIssuerId(), "BoardingPassClassSecondLeg"));
+      payload.addObject(BoardingPass.generateBoardingPassObject(
+          utils.getIssuerId(), "BoardingPassClassSecondLeg",
+          "BoardingPassObjectSecondLeg"));
+    }
     String jwt = null;
     try {
       jwt = utils.generateSaveJwt(payload, origins);
@@ -77,6 +94,5 @@ public class WobGenerateJwtServlet extends HttpServlet{
     PrintWriter out = resp.getWriter();
     out.write(jwt);
   }
-
 
 }

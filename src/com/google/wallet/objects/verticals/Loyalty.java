@@ -48,7 +48,7 @@ public class Loyalty {
     // Define Points
     LoyaltyPoints points = new LoyaltyPoints()
         .setLabel("Points")
-        .setBalance(new LoyaltyPointsBalance().setString("500"))
+        .setBalance(new LoyaltyPointsBalance().setInt(500))
         .setPointsValidInterval(
             new TimeInterval().setEnd(new DateTime()
                 .setDate(com.google.api.client.util.DateTime

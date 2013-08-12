@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.security.GeneralSecurityException;
 import java.security.KeyStoreException;
 import java.security.SignatureException;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
@@ -23,11 +24,10 @@ import com.google.wallet.objects.webservice.WebserviceRequest;
 import com.google.wallet.objects.webservice.WebserviceResponse;
 
 public class WobWebserviceHandlerServlet extends HttpServlet {
-  /**
-   *
-   */
-  private static final long serialVersionUID = 1842327434636112548L;
 
+  private static final long serialVersionUID = 1842327434636112548L;
+  private static final Logger logger =
+      Logger.getLogger(WobWebserviceHandlerServlet.class.getSimpleName());
   public void doGet(HttpServletRequest req, HttpServletResponse resp) {
     doPost(req, resp);
   }
@@ -50,6 +50,7 @@ public class WobWebserviceHandlerServlet extends HttpServlet {
 
     try {
       webRequest = gson.fromJson(req.getReader(), WebserviceRequest.class);
+      logger.info(gson.toJson(webRequest));
       utils = new WobUtils(credentials);
       out = resp.getWriter();
     } catch (FileNotFoundException e) {
@@ -86,6 +87,16 @@ public class WobWebserviceHandlerServlet extends HttpServlet {
     } catch (SignatureException e) {
       e.printStackTrace();
     }
+
+    /*  For rejected sign-up/linking
+    webResponse =
+        new WebserviceResponse("An descriptive error message", "rejected");
+    try {
+      jwt =
+          utils.generateWebserviceFailureResponseJwt(webResponse);
+    } catch (SignatureException e) {
+      e.printStackTrace();
+    }*/
 
     out.write(jwt);
   }

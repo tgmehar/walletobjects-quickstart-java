@@ -7,23 +7,51 @@ var failureHandler = function(params){
 }
 
 function init(){
-  document.getElementById("insert").addEventListener("click", function(){
+  document.getElementById("loyalty").addEventListener("click", function(){
     $.get("insert?type=loyalty", function(data){
       console.log(data);
     })
   });
 
-  $.get("jwt?type=loyalty", function(data){
-    saveToWallet = document.createElement("g:savetowallet");
-    saveToWallet.setAttribute("jwt", data);
-    saveToWallet.setAttribute("onsuccess","successHandler");
-    saveToWallet.setAttribute("onfailure","failureHandler");
-    document.body.appendChild(saveToWallet);
-
-    script = document.createElement("script");
-    script.src = "https://apis.google.com/js/plusone.js";
-    document.head.appendChild(script);
+  document.getElementById("offer").addEventListener("click", function(){
+    $.get("insert?type=offer", function(data){
+      console.log(data);
+    })
   });
+  document.getElementById("generic").addEventListener("click", function(){
+    $.get("insert?type=generic", function(data){
+      console.log(data);
+    })
+  });
+
+  $.when($.get("jwt?type=loyalty", function(data){
+      saveToWallet = document.createElement("g:savetowallet");
+      saveToWallet.setAttribute("jwt", data);
+      saveToWallet.setAttribute("onsuccess","successHandler");
+      saveToWallet.setAttribute("onfailure","failureHandler");
+      document.querySelector("#loyaltysave").appendChild(saveToWallet);}),
+      $.get("jwt?type=offer", function(data){
+      saveToWallet = document.createElement("g:savetowallet");
+      saveToWallet.setAttribute("jwt", data);
+      saveToWallet.setAttribute("onsuccess","successHandler");
+      saveToWallet.setAttribute("onfailure","failureHandler");
+      document.querySelector("#offersave").appendChild(saveToWallet);}),
+      $.get("jwt?type=generic", function(data){
+      saveToWallet = document.createElement("g:savetowallet");
+      saveToWallet.setAttribute("jwt", data);
+      saveToWallet.setAttribute("onsuccess","successHandler");
+      saveToWallet.setAttribute("onfailure","failureHandler");
+      document.querySelector("#genericsave").appendChild(saveToWallet);}),
+      $.get("jwt?type=boardingpass", function(data){
+      saveToWallet = document.createElement("g:savetowallet");
+      saveToWallet.setAttribute("jwt", data);
+      saveToWallet.setAttribute("onsuccess","successHandler");
+      saveToWallet.setAttribute("onfailure","failureHandler");
+      document.querySelector("#boardingpasssave").appendChild(saveToWallet);})).done(function(){
+        script = document.createElement("script");
+        script.src = "https://apis.google.com/js/plusone.js";
+        document.head.appendChild(script);
+      });
 }
 
 

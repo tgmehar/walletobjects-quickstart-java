@@ -27,6 +27,7 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.client.util.SecurityUtils;
 import com.google.api.services.walletobjects.Walletobjects;
+import com.google.api.services.walletobjects.model.DateTime;
 import com.google.common.io.ByteStreams;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -132,8 +133,8 @@ public class WobUtils {
     return credential.getAccessToken();
   }
 
-  public String generateWebserviceResponse (WebserviceResponse resp) throws
-    SignatureException{
+  public String generateWebserviceFailureResponseJwt (WebserviceResponse resp) throws
+    SignatureException {
     return generateWebserviceResponseJwt(null, resp);
   }
 
@@ -192,6 +193,15 @@ public class WobUtils {
     token.getPayloadAsJsonObject().add("payload", obj);
     token.getPayloadAsJsonObject().add("origins", gson.toJsonTree(origins));
     return token.serializeAndSign();
+  }
+  /**
+   *
+   * @param rfc3339
+   * @return
+   */
+  public static DateTime toDateTime(String rfc3339) {
+    return new DateTime()
+        .setDate(com.google.api.client.util.DateTime.parseRfc3339(rfc3339));
   }
 
   /**
