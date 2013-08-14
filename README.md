@@ -1,4 +1,4 @@
-wallet-objects-java-utils
-=========================
+wallet-objects-quickstart-java
+==============================
 
-Wallet Objects Utils 
+Wallet Objects Quickstart Java
