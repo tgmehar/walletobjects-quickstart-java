@@ -61,6 +61,7 @@ public class Offer {
             new Image().setSourceUri(new Uri()
                 .setUri("http://3.bp.blogspot.com/-AvC1agljv9Y/TirbDXOBIPI/AAAAAAAACK0/hR2gs5h2H6A/s1600/Bacon%2BWallpaper.png")))
         .setRenderSpecs(renderSpec).setRedemptionChannel("both")
+        .setReviewStatus("underReview")
         .setLocations(locations).setAllowMultipleUsersPerObject(true);
     return wobClass;
   }
