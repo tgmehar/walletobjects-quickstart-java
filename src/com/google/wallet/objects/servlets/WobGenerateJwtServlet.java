@@ -22,12 +22,23 @@ import com.google.wallet.objects.verticals.Generic;
 import com.google.wallet.objects.verticals.Loyalty;
 import com.google.wallet.objects.verticals.Offer;
 
+/**
+ * This servlet generates Save to Wallet JWTs based on the type URL parameter in
+ * the request. Loyalty, Offer, and Generic only contain the Object. Boarding
+ * pass contains 2 Classes and 2 Objects representing the a multi leg fight.
+ * Credentials are stored in web.xml which is why it needs ServletContext.
+ *
+ * @author pying
+ *
+ */
 @SuppressWarnings("serial")
 public class WobGenerateJwtServlet extends HttpServlet {
   public void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws IOException {
+    // Access credentials from web.xml
     ServletContext context = getServletContext();
 
+    // Create a credentials object
     WobCredentials credentials = new WobCredentials(
         context.getInitParameter("ServiceAccountId"),
         context.getInitParameter("ServiceAccountPrivateKey"),
@@ -36,24 +47,27 @@ public class WobGenerateJwtServlet extends HttpServlet {
 
     WobUtils utils = null;
 
+    // Instantiate the WobUtils class which contains lots of handy functions
     try {
       utils = new WobUtils(credentials);
     } catch (FileNotFoundException e) {
-      // TODO Auto-generated catch block
+      // Add code to handle errors
       e.printStackTrace();
     } catch (KeyStoreException e) {
-      // TODO Auto-generated catch block
+      // Add code to handle errors
       e.printStackTrace();
     } catch (IOException e) {
-      // TODO Auto-generated catch block
+      // Add code to catch errors
       e.printStackTrace();
     } catch (GeneralSecurityException e) {
-      // TODO Auto-generated catch block
+      // Add code to handle errors
       e.printStackTrace();
     }
 
+    // Get type of JWT to generate
     String type = req.getParameter("type");
 
+    // Add valid domains for the Save to Wallet button
     List<String> origins = new ArrayList<String>();
     origins.add("http://localhost:8888");
     origins.add("https://localhost:8888");
@@ -62,6 +76,7 @@ public class WobGenerateJwtServlet extends HttpServlet {
 
     WobPayload payload = new WobPayload();
 
+    // Create the appropriate Object/Classes
     if (type.equals("loyalty")) {
       payload.addObject(Loyalty.generateLoyaltyObject(utils.getIssuerId(),
           "LoyaltyClass", "LoyaltyObject"));
@@ -84,6 +99,8 @@ public class WobGenerateJwtServlet extends HttpServlet {
           utils.getIssuerId(), "BoardingPassClassSecondLeg",
           "BoardingPassObjectSecondLeg"));
     }
+
+    // Convert the object into a Save to Wallet Jwt
     String jwt = null;
     try {
       jwt = utils.generateSaveJwt(payload, origins);
@@ -91,6 +108,7 @@ public class WobGenerateJwtServlet extends HttpServlet {
       e.printStackTrace();
     }
 
+    // Respond with JWT
     PrintWriter out = resp.getWriter();
     out.write(jwt);
   }

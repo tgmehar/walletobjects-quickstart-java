@@ -1,6 +1,5 @@
 package com.google.wallet.objects.utils;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +18,9 @@ import com.google.gson.Gson;
 import com.google.wallet.objects.webservice.WebserviceResponse;
 
 /**
- * Bean to represent the Wob payload object
+ * Bean to represent the Wob payload object. To add an object to the WobPayload,
+ * use the addObject method. This classes uses reflection to determine the
+ * correct array to insert into.
  *
  * @author pying
  *
@@ -40,9 +41,18 @@ public class WobPayload {
   private transient Gson gson = new Gson();
   private transient JsonFactory jsonFactory = new GsonFactory();
 
-  public WobPayload(){}
+  /**
+   * Empty default constructor for Gson deserialization
+   */
+  public WobPayload() {
+  }
 
-  public void addObject(GenericJson object){
+  /**
+   * Adds the object to the appropriate list
+   *
+   * @param object
+   */
+  public void addObject(GenericJson object) {
     object.setFactory(jsonFactory);
 
     if (LoyaltyObject.class.isAssignableFrom(object.getClass())) {
@@ -52,26 +62,21 @@ public class WobPayload {
     } else if (GenericObject.class.isAssignableFrom(object.getClass())) {
       addGenericObject(gson.fromJson(object.toString(), GenericJson.class));
     } else if (BoardingPassObject.class.isAssignableFrom(object.getClass())) {
-      addBoardingPassObject(gson.fromJson(object.toString(),
-          GenericJson.class));
+      addBoardingPassObject(gson.fromJson(object.toString(), GenericJson.class));
     } else if (BoardingPassClass.class.isAssignableFrom(object.getClass())) {
-      addBoardingPassClass(gson.fromJson(object.toString(),
-          GenericJson.class));
+      addBoardingPassClass(gson.fromJson(object.toString(), GenericJson.class));
     } else if (LoyaltyClass.class.isAssignableFrom(object.getClass())) {
-      addLoyaltyClass(gson.fromJson(object.toString(),
-          GenericJson.class));
+      addLoyaltyClass(gson.fromJson(object.toString(), GenericJson.class));
     } else if (OfferClass.class.isAssignableFrom(object.getClass())) {
-      addOfferClass(gson.fromJson(object.toString(),
-          GenericJson.class));
+      addOfferClass(gson.fromJson(object.toString(), GenericJson.class));
     } else if (GenericClass.class.isAssignableFrom(object.getClass())) {
-      addGenericClass(gson.fromJson(object.toString(),
-          GenericJson.class));
+      addGenericClass(gson.fromJson(object.toString(), GenericJson.class));
     } else
       throw new IllegalArgumentException("Invalid Object type: "
           + object.getClass());
   }
 
-  public void addLoyaltyObject(GenericJson object){
+  public void addLoyaltyObject(GenericJson object) {
     loyaltyObjects.add(object);
   }
 
@@ -83,7 +88,7 @@ public class WobPayload {
     this.loyaltyObjects = loyaltyObject;
   }
 
-  public void addOfferObject(GenericJson object){
+  public void addOfferObject(GenericJson object) {
     offerObjects.add(object);
   }
 
@@ -95,7 +100,7 @@ public class WobPayload {
     this.offerObjects = offerObject;
   }
 
-  public void addGenericObject(GenericJson object){
+  public void addGenericObject(GenericJson object) {
     genericObjects.add(object);
   }
 
@@ -123,7 +128,7 @@ public class WobPayload {
     this.boardingPassObjects = boardingPassObjects;
   }
 
-  public void addBoardingPassObject(GenericJson object){
+  public void addBoardingPassObject(GenericJson object) {
     boardingPassObjects.add(object);
   }
 
@@ -135,13 +140,14 @@ public class WobPayload {
   }
 
   /**
-   * @param loyaltyClasses the loyaltyClasses to set
+   * @param loyaltyClasses
+   *          the loyaltyClasses to set
    */
   public void setLoyaltyClasses(List<GenericJson> loyaltyClasses) {
     this.loyaltyClasses = loyaltyClasses;
   }
 
-  public void addLoyaltyClass(GenericJson object){
+  public void addLoyaltyClass(GenericJson object) {
     loyaltyClasses.add(object);
   }
 
@@ -153,15 +159,17 @@ public class WobPayload {
   }
 
   /**
-   * @param offerClasses the offerClasses to set
+   * @param offerClasses
+   *          the offerClasses to set
    */
   public void setOfferClasses(List<GenericJson> offerClasses) {
     this.offerClasses = offerClasses;
   }
 
-  public void addOfferClass(GenericJson object){
+  public void addOfferClass(GenericJson object) {
     offerClasses.add(object);
   }
+
   /**
    * @return the genericClasses
    */
@@ -170,13 +178,14 @@ public class WobPayload {
   }
 
   /**
-   * @param genericClasses the genericClasses to set
+   * @param genericClasses
+   *          the genericClasses to set
    */
   public void setGenericClasses(List<GenericJson> genericClasses) {
     this.genericClasses = genericClasses;
   }
 
-  public void addGenericClass(GenericJson object){
+  public void addGenericClass(GenericJson object) {
     genericClasses.add(object);
   }
 
@@ -188,13 +197,14 @@ public class WobPayload {
   }
 
   /**
-   * @param boardingPassClasses the boardingPassClasses to set
+   * @param boardingPassClasses
+   *          the boardingPassClasses to set
    */
   public void setBoardingPassClasses(List<GenericJson> boardingPassClasses) {
     this.boardingPassClasses = boardingPassClasses;
   }
 
-  public void addBoardingPassClass(GenericJson object){
+  public void addBoardingPassClass(GenericJson object) {
     boardingPassClasses.add(object);
   }
 

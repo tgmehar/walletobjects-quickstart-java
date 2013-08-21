@@ -11,10 +11,26 @@ import com.google.api.services.walletobjects.model.OfferObject;
 import com.google.api.services.walletobjects.model.RenderSpec;
 import com.google.api.services.walletobjects.model.Uri;
 
+/**
+ * Generates an example Offer Class and Object
+ *
+ * @author pying
+ *
+ */
 public class Offer {
 
+  /**
+   * Create an example Offer Object
+   *
+   * @param issuerId
+   * @param classId
+   * @param objectId
+   * @return
+   */
   public static OfferObject generateOfferObject(String issuerId,
       String classId, String objectId) {
+
+    // Define Barcode
     Barcode barcode = new Barcode().setType("upcA").setValue("123456789012")
         .setAlternateText("12345").setLabel("User Id");
 
@@ -26,6 +42,13 @@ public class Offer {
     return object;
   }
 
+  /**
+   * Create an example Offer Class
+   *
+   * @param issuerId
+   * @param classId
+   * @return
+   */
   public static OfferClass generateOfferClass(String issuerId,
       String classId) {
 

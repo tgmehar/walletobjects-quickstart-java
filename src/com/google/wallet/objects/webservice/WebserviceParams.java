@@ -1,13 +1,19 @@
 package com.google.wallet.objects.webservice;
 
+/**
+ * Bean for Webservice API request parameters.  Used in Gson deserialization
+ *
+ * @author pying
+ *
+ */
 public class WebserviceParams {
   String linkingId;
   WebserviceWalletUser walletUser;
   Boolean promotionalEmailOptIn;
   Boolean tosUserAcceptance;
-  
+
   public WebserviceParams() {}
-  
+
   /**
    * @return the linkingId
    */

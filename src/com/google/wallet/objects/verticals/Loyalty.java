@@ -17,6 +17,12 @@ import com.google.api.services.walletobjects.model.TypedValue;
 import com.google.api.services.walletobjects.model.Uri;
 import com.google.api.services.walletobjects.model.WalletObjectMessage;
 
+/**
+ * Class to generate example Loyalty class and objects
+ *
+ * @author pying
+ *
+ */
 public class Loyalty {
 
   /**
@@ -187,7 +193,7 @@ public class Loyalty {
         .setRewardsTierLabel("Tier").setRewardsTier("Gold")
         .setAccountNameLabel("Member Name").setAccountIdLabel("Member Id")
         .setRenderSpecs(renderSpec).setMessages(messages)
-        .setReviewStatus("draft").setAllowMultipleUsersPerObject(true)
+        .setReviewStatus("underReview").setAllowMultipleUsersPerObject(true)
         .setLocations(locations).setIssuerData(issuerData);
 
     return wobClass;

@@ -14,35 +14,45 @@ import com.google.wallet.objects.utils.WobUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class to generate example BoardingPass class and objects.
+ *
+ * @author pying
+ *
+ */
 public class BoardingPass {
 
-  public static BoardingPassObject generateBoardingPassObject(
-      String issuerId, String classId, String objectId) {
-    //Define Barcode
-    Barcode barcode = new Barcode()
-      .setType("qrCode")
-      .setValue("28343E3")
-      .setAlternateText("12345")
-      .setLabel("User Id");
+  /**
+   * Create a Boarding Pass Object
+   *
+   * @param issuerId
+   * @param classId
+   * @param objectId
+   * @return
+   */
+  public static BoardingPassObject generateBoardingPassObject(String issuerId,
+      String classId, String objectId) {
+    // Define Barcode
+    Barcode barcode = new Barcode().setType("qrCode").setValue("28343E3")
+        .setAlternateText("12345").setLabel("User Id");
 
-    //Define Messages:
+    // Define Messages:
     List<WalletObjectMessage> messages = new ArrayList<WalletObjectMessage>();
     WalletObjectMessage message = new WalletObjectMessage()
-      .setHeader("Hi Joe")
-      .setBody("Have a safe trip!")
-      .setImage(new Image().setSourceUri(new Uri().setUri("https://ssl.gstatic.com/codesite/ph/images/search-48.gif")))
-      .setActionUri(new Uri().setUri("http://www.google.com"));
+        .setHeader("Hi Joe")
+        .setBody("Have a safe trip!")
+        .setImage(
+            new Image().setSourceUri(new Uri()
+                .setUri("https://ssl.gstatic.com/codesite/ph/images/search-48.gif")))
+        .setActionUri(new Uri().setUri("http://www.google.com"));
     messages.add(message);
 
-    //Define PassengerName:
-    PassengerName passengerName = new PassengerName()
-        .setPrefix("Mr.")
-        .setFirst("Joseph")
-        .setMiddle("Robert")
-        .setLast("Passenger")
+    // Define PassengerName:
+    PassengerName passengerName = new PassengerName().setPrefix("Mr.")
+        .setFirst("Joseph").setMiddle("Robert").setLast("Passenger")
         .setSuffix("Jr.");
 
-    //Define Wallet instance
+    // Define Wallet instance
     BoardingPassObject boardingPass = new BoardingPassObject()
         .setClassId(issuerId + "." + classId)
         .setId(issuerId + "." + objectId)
@@ -51,43 +61,48 @@ public class BoardingPass {
         .setBarcode(barcode)
         .setMessages(messages)
 
-        //BoardingPassObject specific fields
-        .setBoardingZone("2")
-        .setElectronicTicket(true)
-        .setFreqFlierAccountId("31415927")
-        .setFreqFlierTierLevel("Gold")
+        // BoardingPassObject specific fields
+        .setBoardingZone("2").setElectronicTicket(true)
+        .setFreqFlierAccountId("31415927").setFreqFlierTierLevel("Gold")
         .setPassengerName(passengerName)
         .setPassengerStatus(ImmutableList.of("STBY"))
-        .setRecordLocator("XYZZY1")
-        .setSeat("14F")
-        .setSeatClass("Economy")
+        .setRecordLocator("XYZZY1").setSeat("14F").setSeatClass("Economy")
         .setSeatDescriptions(ImmutableList.of("Window"))
-        .setSecuritySelecteeStatus("SSSS")
-        .setSequenceNumber("17")
+        .setSecuritySelecteeStatus("SSSS").setSequenceNumber("17")
         .setSpecialServiceCodes(ImmutableList.of("UMNR"))
         .setTicketNumber("0112358132134");
 
     return boardingPass;
-
   }
 
-  public static BoardingPassClass generateBoardingPassClass(
-      String issuerId, String classId) {
+  /**
+   * Create a Boarding Pass Class
+   *
+   * @param issuerId
+   * @param classId
+   * @return
+   */
+  public static BoardingPassClass generateBoardingPassClass(String issuerId,
+      String classId) {
 
-    //Define general messages
+    // Define general messages
     List<WalletObjectMessage> messages = new ArrayList<WalletObjectMessage>();
     WalletObjectMessage message = new WalletObjectMessage()
-      .setHeader("Free Wifi")
-      .setBody("Free Wifi on Flight 123, compliments of Google")
-      .setImage(new Image().setSourceUri(new Uri().setUri("https://ssl.gstatic.com/codesite/ph/images/search-48.gif")))
-      .setActionUri(new Uri().setUri("http://www.google.com"));
+        .setHeader("Free Wifi")
+        .setBody("Free Wifi on Flight 123, compliments of Google")
+        .setImage(
+            new Image().setSourceUri(new Uri()
+                .setUri("https://ssl.gstatic.com/codesite/ph/images/search-48.gif")))
+        .setActionUri(new Uri().setUri("http://www.google.com"));
     messages.add(message);
 
-    //Define rendering templates per view
+    // Define rendering templates per view
     List<RenderSpec> renderSpec = new ArrayList<RenderSpec>();
 
-    RenderSpec listRenderSpec = new RenderSpec().setViewName("g_list").setTemplateFamily("1.boardingPass1_list");
-    RenderSpec expandedRenderSpec = new RenderSpec().setViewName("g_expanded").setTemplateFamily("1.boardingPass1_expanded");
+    RenderSpec listRenderSpec = new RenderSpec().setViewName("g_list")
+        .setTemplateFamily("1.boardingPass1_list");
+    RenderSpec expandedRenderSpec = new RenderSpec().setViewName("g_expanded")
+        .setTemplateFamily("1.boardingPass1_expanded");
 
     renderSpec.add(listRenderSpec);
     renderSpec.add(expandedRenderSpec);
@@ -101,33 +116,34 @@ public class BoardingPass {
         .setMessages(messages)
         .setAllowMultipleUsersPerObject(true)
 
-        //BoardingPassClass specific fields
+        // BoardingPassClass specific fields
         .setAircraftType("737")
         .setArrivalAirportCode("SFO")
         .setArrivalCityName("San Francisco")
         .setArrivalDateTimeActual(WobUtils.toDateTime("2013-07-29T18:00:00Z"))
-        .setArrivalDateTimeScheduled(WobUtils.toDateTime("2013-07-29T17:30:00Z"))
+        .setArrivalDateTimeScheduled(
+            WobUtils.toDateTime("2013-07-29T17:30:00Z"))
         .setArrivalGate("C12")
         .setArrivalTerminal("C")
         .setArrivalTimeZone("America/Los_Angeles")
         .setBoardingDateTime(WobUtils.toDateTime("2013-07-29T11:30:00Z"))
         .setCarrierCode("IA")
-        .setCarrierLogoImage(new Image().setSourceUri(new Uri().setUri("https://ssl.gstatic.com/codesite/ph/images/search-48.gif")))
+        .setCarrierLogoImage(
+            new Image().setSourceUri(new Uri()
+                .setUri("https://ssl.gstatic.com/codesite/ph/images/search-48.gif")))
         .setCarrierName("Imagine Airlines")
         .setDepartureAirportCode("BOS")
         .setDepartureCityName("Boston")
         .setDepartureDateTimeActual(WobUtils.toDateTime("2013-07-29T12:30:00Z"))
-        .setDepartureDateTimeScheduled(WobUtils.toDateTime("2013-07-29T12:00:00Z"))
-        .setDepartureGate("B11")
-        .setDepartureTerminal("B")
-        .setDepartureTimeZone("America/New_York")
-        .setFlightNumber("123")
+        .setDepartureDateTimeScheduled(
+            WobUtils.toDateTime("2013-07-29T12:00:00Z"))
+        .setDepartureGate("B11").setDepartureTerminal("B")
+        .setDepartureTimeZone("America/New_York").setFlightNumber("123")
         .setHomepageUri(new Uri().setUri("http://www.google.com"))
         .setOnboardServices(ImmutableList.of("Wifi"))
         .setOperatingCarrierCode("SO")
         .setOperatingCarrierName("SomeOther Airline")
-        .setOperatingFlightNumber("456")
-        .setStatusCode("delayed");
+        .setOperatingFlightNumber("456").setStatusCode("delayed");
 
     return flight;
   }

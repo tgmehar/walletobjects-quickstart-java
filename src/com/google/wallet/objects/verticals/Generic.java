@@ -13,8 +13,24 @@ import com.google.api.services.walletobjects.model.TypedValue;
 import com.google.api.services.walletobjects.model.Uri;
 import com.google.api.services.walletobjects.model.WalletObjectMessage;
 
+/**
+ * Class to generate example Generic class and objects. The example is a sample
+ * library card class which contains library specific information and a library
+ * card object which contains information like the books the user has out and
+ * when the next book is due.
+ *
+ * @author pying
+ *
+ */
 public class Generic {
 
+  /**
+   * Generate the Generic example class
+   *
+   * @param issuerId
+   * @param classId
+   * @return
+   */
   public static GenericClass generateGenericClass(String issuerId,
       String classId) {
     // Define general messages
@@ -79,6 +95,7 @@ public class Generic {
     issuerData.put("g_expanded", gExpanded);
     List<RenderSpec> renderSpec = new ArrayList<RenderSpec>();
 
+    //Set renderSpecs
     RenderSpec listRenderSpec = new RenderSpec().setViewName("g_list")
         .setTemplateFamily("1.generic1_list");
     RenderSpec expandedRenderSpec = new RenderSpec().setViewName("g_expanded")
@@ -91,6 +108,7 @@ public class Generic {
     locations.add(new LatLongPoint().setLatitude(37.422601).setLongitude(
         -122.085286));
 
+    //Create the Class
     GenericClass wobClass = new GenericClass()
         .setId(issuerId + "." + classId)
         .setVersion(1L)
@@ -108,12 +126,21 @@ public class Generic {
     return wobClass;
   }
 
+  /**
+   * Generate a Generic wallet object
+   * @param issuerId
+   * @param classId
+   * @param objectId
+   * @return
+   */
   public static GenericObject generateGenericObject(String issuerId,
       String classId, String objectId) {
 
+    //Define a barcode
     Barcode barcode = new Barcode().setType("qrCode").setValue("28343E3")
         .setAlternateText("12345").setLabel("Member Id");
 
+    //Define IssuerData
     TypedValue objectIssuerData = new TypedValue();
     TypedValue objectGExpanded = new TypedValue();
 
@@ -147,6 +174,7 @@ public class Generic {
 
     objectIssuerData.put("g_expanded", objectGExpanded);
 
+    //Define Messages
     List<WalletObjectMessage> messages = new ArrayList<WalletObjectMessage>();
     WalletObjectMessage message = new WalletObjectMessage()
         .setHeader("Hi Joe")
@@ -157,6 +185,7 @@ public class Generic {
         .setActionUri(new Uri().setUri("http://baconrista.com"));
     messages.add(message);
 
+    //Create the Object
     GenericObject object = new GenericObject()
         .setClassId(issuerId + "." + classId).setId(issuerId + "." + objectId)
         .setVersion(1L).setState("active").setBarcode(barcode)
