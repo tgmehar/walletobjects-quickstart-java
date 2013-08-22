@@ -1,11 +1,20 @@
+/**
+ * Save to Wallet success handler
+ */
 var successHandler = function(params){
   console.log("Object added successfully" + params);
 }
 
+/**
+ * Save to Wallet failure handler
+ */
 var failureHandler = function(params){
   console.log("Object insertion failed" + params);
 }
 
+/**
+ * Initialization function
+ */
 function init(){
   document.getElementById("loyalty").addEventListener("click", function(){
     $.get("insert?type=loyalty", function(data){

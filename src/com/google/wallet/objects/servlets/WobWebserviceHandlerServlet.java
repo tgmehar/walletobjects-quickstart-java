@@ -87,12 +87,8 @@ public class WobWebserviceHandlerServlet extends HttpServlet {
       e.printStackTrace();
     }
 
-    // Handle signup vs linking
-    if (webRequest.getMethod().equals("signup"))
-      webResponse = new WebserviceResponse("Welcome to baconrista", "approved");
-    else
-      webResponse = new WebserviceResponse("Thanks for linking to baconrista",
-          "approved");
+    // Handle signup and linking
+    webResponse = new WebserviceResponse(WebserviceResponse.Response.approved);
 
     String linkId = webRequest.getParams().getLinkingId();
     LoyaltyObject loyaltyObject = Loyalty.generateLoyaltyObject(utils
@@ -108,7 +104,7 @@ public class WobWebserviceHandlerServlet extends HttpServlet {
 
     /*  For rejected sign-up/linking
     webResponse =
-        new WebserviceResponse("An descriptive error message", "rejected");
+        new WebserviceResponse("An descriptive error message", WebserviceResponse.Response.rejected);
     try {
       jwt =
           utils.generateWebserviceFailureResponseJwt(webResponse);

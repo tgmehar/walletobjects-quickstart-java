@@ -9,13 +9,20 @@ package com.google.wallet.objects.webservice;
  */
 public class WebserviceResponse {
   String message;
-  String result;
+  Response result;
 
+  public enum Response{
+    approved, rejected
+  }
   public WebserviceResponse() {
   }
 
-  public WebserviceResponse(String message, String result) {
+  public WebserviceResponse(String message, Response result) {
     setMessage(message);
+    setResult(result);
+  }
+
+  public WebserviceResponse(Response result) {
     setResult(result);
   }
 
@@ -27,11 +34,11 @@ public class WebserviceResponse {
     this.message = message;
   }
 
-  public String getResult() {
+  public Response getResult() {
     return result;
   }
 
-  public void setResult(String result) {
+  public void setResult(Response result) {
     this.result = result;
   }
 }
