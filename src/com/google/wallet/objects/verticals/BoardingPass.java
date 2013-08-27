@@ -143,7 +143,8 @@ public class BoardingPass {
         .setOnboardServices(ImmutableList.of("Wifi"))
         .setOperatingCarrierCode("SO")
         .setOperatingCarrierName("SomeOther Airline")
-        .setOperatingFlightNumber("456").setStatusCode("delayed");
+        .setOperatingFlightNumber("456").setStatusCode("delayed")
+        .setReviewStatus("underReview");
 
     return flight;
   }
