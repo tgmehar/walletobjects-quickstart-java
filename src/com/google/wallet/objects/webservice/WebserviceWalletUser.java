@@ -13,7 +13,9 @@ public class WebserviceWalletUser {
   String firstName;
   String middleName;
   String lastName;
-  String streetAddress;
+  String addressLine1;
+  String addressLine2;
+  String addressLine3;
   String city;
   String state;
   String zipcode;
@@ -75,16 +77,44 @@ public class WebserviceWalletUser {
   /**
    * @return the streetAddress
    */
-  public String getStreetAddress() {
-    return streetAddress;
+  public String getAddressLine1() {
+    return addressLine1;
   }
 
   /**
    * @param streetAddress
    *          the streetAddress to set
    */
-  public void setStreetAddress(String streetAddress) {
-    this.streetAddress = streetAddress;
+  public void setAddressLine1(String addressLine2) {
+    this.addressLine1 = addressLine2;
+  }
+
+  /**
+   * @return the addressLine2
+   */
+  public String getAddressLine2() {
+    return addressLine2;
+  }
+
+  /**
+   * @param addressLine2 the addressLine2 to set
+   */
+  public void setAddressLine2(String addressLine2) {
+    this.addressLine2 = addressLine2;
+  }
+
+  /**
+   * @return the addressLine3
+   */
+  public String getAddressLine3() {
+    return addressLine3;
+  }
+
+  /**
+   * @param addressLine3 the addressLine3 to set
+   */
+  public void setAddressLine3(String addressLine3) {
+    this.addressLine3 = addressLine3;
   }
 
   /**
