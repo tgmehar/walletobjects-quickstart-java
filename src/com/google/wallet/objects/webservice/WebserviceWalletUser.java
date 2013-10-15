@@ -11,7 +11,6 @@ import java.util.List;
  */
 public class WebserviceWalletUser {
   String firstName;
-  String middleName;
   String lastName;
   String addressLine1;
   String addressLine2;
@@ -42,21 +41,6 @@ public class WebserviceWalletUser {
    */
   public void setFirstName(String firstName) {
     this.firstName = firstName;
-  }
-
-  /**
-   * @return the middleName
-   */
-  public String getMiddleName() {
-    return middleName;
-  }
-
-  /**
-   * @param middleName
-   *          the middleName to set
-   */
-  public void setMiddleName(String middleName) {
-    this.middleName = middleName;
   }
 
   /**
