@@ -89,12 +89,12 @@ public class WobWebserviceHandlerServlet extends HttpServlet {
 
     // Handle signup and linking
     webResponse = new WebserviceResponse(WebserviceResponse.Response.approved);
-    webResponse.setMessage("Welcome to My Starbucks Rewards");
+    webResponse.setMessage("Welcome to My Baconrista Rewards");
 
     String linkId = webRequest.getParams().getLinkingId();
     LoyaltyObject loyaltyObject = Loyalty.generateLoyaltyObject(utils
-        .getIssuerId(), "starbucksclass", (linkId != null) ? linkId
-        : "starbucksobjectwebapi");
+        .getIssuerId(), "LoyaltyClass", (linkId != null) ? linkId
+        : "LoyaltyObject");
 
     // Create the response JWT
     try {
