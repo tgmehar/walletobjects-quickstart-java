@@ -27,11 +27,11 @@ function init(){
       console.log(data);
     })
   });
-  document.getElementById("generic").addEventListener("click", function(){
+  /*document.getElementById("generic").addEventListener("click", function(){
     $.get("insert?type=generic", function(data){
       console.log(data);
     })
-  });
+  });*/
 
   $.when($.get("jwt?type=loyalty", function(data){
       saveToWallet = document.createElement("g:savetowallet");
@@ -44,7 +44,7 @@ function init(){
       saveToWallet.setAttribute("jwt", data);
       saveToWallet.setAttribute("onsuccess","successHandler");
       saveToWallet.setAttribute("onfailure","failureHandler");
-      document.querySelector("#offersave").appendChild(saveToWallet);}),
+      document.querySelector("#offersave").appendChild(saveToWallet);})/*,
       $.get("jwt?type=generic", function(data){
       saveToWallet = document.createElement("g:savetowallet");
       saveToWallet.setAttribute("jwt", data);
@@ -56,7 +56,7 @@ function init(){
       saveToWallet.setAttribute("jwt", data);
       saveToWallet.setAttribute("onsuccess","successHandler");
       saveToWallet.setAttribute("onfailure","failureHandler");
-      document.querySelector("#boardingpasssave").appendChild(saveToWallet);})).done(function(){
+      document.querySelector("#boardingpasssave").appendChild(saveToWallet);})*/).done(function(){
         script = document.createElement("script");
         script.src = "https://apis.google.com/js/plusone.js";
         document.head.appendChild(script);

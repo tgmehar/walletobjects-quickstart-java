@@ -73,13 +73,14 @@ public class WobGenerateJwtServlet extends HttpServlet {
     origins.add("https://localhost:8888");
     origins.add("http://wobs-quickstart.appspot.com");
     origins.add("https://wobs-quickstart.appspot.com");
+    origins.add(req.getScheme() + "://" + req.getServerName());
 
     WobPayload payload = new WobPayload();
 
     // Create the appropriate Object/Classes
     if (type.equals("loyalty")) {
       payload.addObject(Loyalty.generateLoyaltyObject(utils.getIssuerId(),
-          "LoyaltyClass", "LoyaltyObject"));
+          "LoyaltyClassIssuerDataTest", "LoyaltyObjectIssuerDataTest15"));
     } else if (type.equals("offer")) {
       payload.addObject(Offer.generateOfferObject(utils.getIssuerId(),
           "OfferClass", "OfferObject"));
