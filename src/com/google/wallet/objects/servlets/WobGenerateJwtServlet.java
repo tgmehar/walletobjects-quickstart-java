@@ -80,7 +80,7 @@ public class WobGenerateJwtServlet extends HttpServlet {
     // Create the appropriate Object/Classes
     if (type.equals("loyalty")) {
       payload.addObject(Loyalty.generateLoyaltyObject(utils.getIssuerId(),
-          "LoyaltyClassIssuerDataTest", "LoyaltyObjectIssuerDataTest15"));
+          "LoyaltyClass", "LoyaltyObject"));
     } else if (type.equals("offer")) {
       payload.addObject(Offer.generateOfferObject(utils.getIssuerId(),
           "OfferClass", "OfferObject"));
