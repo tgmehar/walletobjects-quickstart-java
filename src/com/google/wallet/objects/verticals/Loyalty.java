@@ -6,12 +6,17 @@ import java.util.List;
 import com.google.api.services.walletobjects.model.Barcode;
 import com.google.api.services.walletobjects.model.DateTime;
 import com.google.api.services.walletobjects.model.Image;
+import com.google.api.services.walletobjects.model.InfoModuleData;
+import com.google.api.services.walletobjects.model.LabelValue;
+import com.google.api.services.walletobjects.model.LabelValueRow;
 import com.google.api.services.walletobjects.model.LatLongPoint;
+import com.google.api.services.walletobjects.model.LinksModuleData;
 import com.google.api.services.walletobjects.model.LoyaltyClass;
 import com.google.api.services.walletobjects.model.LoyaltyObject;
 import com.google.api.services.walletobjects.model.LoyaltyPoints;
 import com.google.api.services.walletobjects.model.LoyaltyPointsBalance;
 import com.google.api.services.walletobjects.model.RenderSpec;
+import com.google.api.services.walletobjects.model.TextModuleData;
 import com.google.api.services.walletobjects.model.TimeInterval;
 import com.google.api.services.walletobjects.model.TypedValue;
 import com.google.api.services.walletobjects.model.Uri;
@@ -36,32 +41,60 @@ public class Loyalty {
   public static LoyaltyObject generateLoyaltyObject(String issuerId,
       String classId, String objectId) {
     // Define Barcode
-    Barcode barcode = new Barcode().setType("qrCode").setValue("28343E3")
-        .setAlternateText("12345").setLabel("User Id");
-
-    // Define Messages:
-    List<WalletObjectMessage> messages = new ArrayList<WalletObjectMessage>();
-    WalletObjectMessage message = new WalletObjectMessage()
-        .setHeader("Hi Joe")
-        .setBody(
-            "Click here for a coupon to use at your local Baconrista shop!")
-        .setImage(
-            new Image().setSourceUri(new Uri()
-                .setUri("https://ssl.gstatic.com/codesite/ph/images/search-48.gif")))
-        .setActionUri(new Uri().setUri("http://baconrista.com"));
-    messages.add(message);
+    Barcode barcode = new Barcode().setType("pdf417").setValue("12345678901234");
 
     // Define Points
     LoyaltyPoints points = new LoyaltyPoints()
-        .setLabel("Points")
-        .setBalance(new LoyaltyPointsBalance().setInt(500))
-        .setPointsValidInterval(
-            new TimeInterval().setEnd(new DateTime()
-                .setDate(com.google.api.client.util.DateTime
-                    .parseRfc3339("2011-06-03T10:00:00.000-07:00"))))
-        .setPointsType("rewards");
+        .setLabel("Balance")
+        .setBalance(new LoyaltyPointsBalance().setString("$25.00"));
+/*
+    // Define Text Module Data
+    List<TextModuleData> textModuleDatas = new ArrayList<TextModuleData>();
 
-    // Define IssuerData
+    TextModuleData textModuleData = new TextModuleData().setHeader("Text Header").setBody("Text Body");
+    textModuleDatas.add(textModuleData);
+
+    // Define Uris
+    List<Uri> uris = new ArrayList<Uri>();
+    Uri uri1 = new Uri().setDescription("uri 1 description").setUri("http://www.google.com");
+    Uri uri2 = new Uri().setDescription("uri 2 description").setUri("http://developers.google.com");
+
+    uris.add(uri1);
+    uris.add(uri2);
+
+    LinksModuleData linksModuleData = new LinksModuleData().setUris(uris);
+
+    // Define Info Module
+    List<LabelValue> row0cols = new ArrayList<LabelValue>();
+    LabelValue row0col0 = new LabelValue().setLabel("Label0-0").setValue("value0-0");
+    LabelValue row0col1 = new LabelValue().setLabel("label0-1").setValue("value0-1");
+    row0cols.add(row0col0);
+    row0cols.add(row0col1);
+
+    List<LabelValue> row1cols = new ArrayList<LabelValue>();
+    LabelValue row1col0 = new LabelValue().setLabel("Label1-0").setValue("value1-0");
+    LabelValue row1col1 = new LabelValue().setLabel("label1-1").setValue("value01-1");
+    row1cols.add(row1col0);
+    row1cols.add(row1col1);
+
+    List<LabelValueRow> rows = new ArrayList<LabelValueRow>();
+    LabelValueRow row0 = new LabelValueRow().setHexBackgroundColor("#AEAEAE").setColumns(row0cols);
+    LabelValueRow row1 = new LabelValueRow().setHexBackgroundColor("#AEAEAE").setColumns(row1cols);
+
+    rows.add(row0);
+    rows.add(row1);
+
+    InfoModuleData infoModuleData = new InfoModuleData().setHexFontColor("#FF3300").setHexBackgroundColor("#ABABAB").setShowLastUpdateTime(true).setLabelValueRows(rows);
+
+    // Define Wallet Instance
+    LoyaltyObject object = new LoyaltyObject()
+        .setClassId(issuerId + "." + classId).setId(issuerId + "." + objectId)
+        .setVersion(1L).setState("active").setBarcode(barcode).setInfoModuleData(infoModuleData)
+        .setMessages(messages).setAccountName("Joe Smith").setTextModuleDatas(textModuleDatas)
+        .setAccountId("1234567890").setLoyaltyPoints(points).setLinksModuleData(linksModuleData);
+*/
+
+ // Define IssuerData
     TypedValue objectIssuerData = new TypedValue();
 
     TypedValue objectGExpanded = new TypedValue();
@@ -70,17 +103,26 @@ public class Loyalty {
     TypedValue rowZero = new TypedValue();
 
     TypedValue colZero = new TypedValue();
-    colZero.put("label", new TypedValue().setString("Local Store"));
-    colZero.put("value", new TypedValue().setString("Mountain View"));
+    colZero.put("label", new TypedValue().setString("Next Reward In"));
+    colZero.put("value", new TypedValue().setString("8 Points"));
 
     TypedValue colOne = new TypedValue();
-    colOne.put("label", new TypedValue().setString("Next Reward In"));
-    colOne.put("value", new TypedValue().setInt(2));
+    colOne.put("label", new TypedValue().setString("Next Level In"));
+    colOne.put("value", new TypedValue().setString("0 Points"));
 
     rowZero.put("col0", colZero);
     rowZero.put("col1", colOne);
 
+    TypedValue rowOne = new TypedValue();
+
+    TypedValue rowOneColZero = new TypedValue();
+    rowOneColZero.put("label", new TypedValue().setString("Next Reward In"));
+    rowOneColZero.put("value", new TypedValue().setString("8 Points"));
+
+    rowOne.put("col0", rowOneColZero);
+
     objectInfoModule.put("row0", rowZero);
+    objectInfoModule.put("row1", rowOne);
     objectGExpanded.put("infoModule", objectInfoModule);
 
     objectIssuerData.put("g_expanded", objectGExpanded);
@@ -89,8 +131,8 @@ public class Loyalty {
     LoyaltyObject object = new LoyaltyObject()
         .setClassId(issuerId + "." + classId).setId(issuerId + "." + objectId)
         .setVersion(1L).setState("active").setBarcode(barcode)
-        .setMessages(messages).setAccountName("Joe Smith")
-        .setAccountId("1234567890").setLoyaltyPoints(points)
+        .setAccountName("Caffeine Jones")
+        .setAccountId("12345678901234").setLoyaltyPoints(points)
         .setIssuerData(objectIssuerData);
 
     return object;
@@ -115,54 +157,6 @@ public class Loyalty {
                 .setUri("https://ssl.gstatic.com/codesite/ph/images/search-48.gif")))
         .setActionUri(new Uri().setUri("http://baconrista.com"));
     messages.add(message);
-
-    // Define Class IssuerData
-    TypedValue issuerData = new TypedValue();
-
-    TypedValue gExpanded = new TypedValue();
-    TypedValue textModule = new TypedValue();
-    textModule.put("header", new TypedValue().setString("Rewards details"));
-    textModule.put("body", new TypedValue()
-        .setString("Welcome to Baconrista rewards.  For every"
-            + "5 coffees purchased you'll receive a free bacon fat latte"));
-
-    TypedValue linksModule = new TypedValue();
-
-    linksModule.put("uri0", new TypedValue().setUri(new Uri().setUri(
-        "http://www.example.com").setDescription("Example")));
-
-    TypedValue infoModule = new TypedValue();
-
-    infoModule.put("fontColor", new TypedValue().setString("#FF3300"));
-    infoModule.put("backgroundColor", new TypedValue().setString("#ABABAB"));
-    infoModule.put(
-        "row0",
-        new TypedValue().set(
-            "col0",
-            new TypedValue()
-                .set("label", new TypedValue().setString("Label 0")).set(
-                    "value", new TypedValue().setString("Value 0"))).set(
-            "col1",
-            new TypedValue()
-                .set("label", new TypedValue().setString("Label 1")).set(
-                    "value", new TypedValue().setString("Value1"))));
-    infoModule.put(
-        "row1",
-        new TypedValue().set(
-            "col0",
-            new TypedValue()
-                .set("label", new TypedValue().setString("Label 0")).set(
-                    "value", new TypedValue().setString("Value 0"))).set(
-            "col1",
-            new TypedValue()
-                .set("label", new TypedValue().setString("Label 1")).set(
-                    "value", new TypedValue().setString("Value1"))));
-
-    gExpanded.put("textModule", textModule);
-    gExpanded.put("linksModule", linksModule);
-    gExpanded.put("infoModule", infoModule);
-
-    issuerData.put("g_expanded", gExpanded);
 
     // Define rendering templates per view
     List<RenderSpec> renderSpec = new ArrayList<RenderSpec>();
@@ -194,7 +188,7 @@ public class Loyalty {
         .setAccountNameLabel("Member Name").setAccountIdLabel("Member Id")
         .setRenderSpecs(renderSpec).setMessages(messages)
         .setReviewStatus("underReview").setAllowMultipleUsersPerObject(true)
-        .setLocations(locations).setIssuerData(issuerData);
+        .setLocations(locations);
 
     return wobClass;
   }

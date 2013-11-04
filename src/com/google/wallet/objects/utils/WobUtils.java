@@ -106,7 +106,7 @@ public class WobUtils {
   public Walletobjects getClient() throws GeneralSecurityException, IOException {
     credential = getCredential();
 
-    return new Walletobjects.Builder(httpTransport, jsonFactory, credential)
+    return new Walletobjects.Builder(httpTransport, jsonFactory, credential)//.setRootUrl("https://www-googleapis-staging.sandbox.google.com")
         .setApplicationName(applicationName).build();
   }
 
