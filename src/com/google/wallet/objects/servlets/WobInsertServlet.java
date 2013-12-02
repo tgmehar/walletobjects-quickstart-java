@@ -12,6 +12,7 @@ import com.google.api.client.json.GenericJson;
 import com.google.api.services.walletobjects.Walletobjects;
 import com.google.api.services.walletobjects.model.GenericClass;
 import com.google.api.services.walletobjects.model.LoyaltyClass;
+import com.google.api.services.walletobjects.model.LoyaltyObject;
 import com.google.api.services.walletobjects.model.OfferClass;
 import com.google.wallet.objects.utils.WobCredentials;
 import com.google.wallet.objects.utils.WobUtils;
@@ -39,7 +40,7 @@ public class WobInsertServlet extends HttpServlet {
 
     // Create the WobCredential object to use
     WobCredentials credentials = new WobCredentials(
-        context.getInitParameter("ServiceAccountId"),
+        context.getInitParameter("ServiceAccountEmailAddress"),
         context.getInitParameter("ServiceAccountPrivateKey"),
         context.getInitParameter("ApplicationName"),
         context.getInitParameter("IssuerId"));
@@ -69,17 +70,20 @@ public class WobInsertServlet extends HttpServlet {
     // Create and insert type
     if (type.equals("loyalty")) {
       LoyaltyClass loyaltyClass = Loyalty.generateLoyaltyClass(
-          utils.getIssuerId(), "LoyaltyClass");
+          utils.getIssuerId(), context.getInitParameter("LoyaltyClassId"));
       response = client.loyaltyclass().insert(loyaltyClass).execute();
+
     } else if (type.equals("offer")) {
       OfferClass offerClass = Offer.generateOfferClass(utils.getIssuerId(),
-          "OfferClass");
+          context.getInitParameter("OfferClassId"));
       response = client.offerclass().insert(offerClass).execute();
-    } else if (type.equals("generic")) {
+    }/* else if (type.equals("generic")) {
       GenericClass genericClass = Generic.generateGenericClass(
           utils.getIssuerId(), "GenericClass");
       response = client.genericclass().insert(genericClass).execute();
-    }
+    }*/
+
+
     // For server side insertion of Boarding passes instead of using Save to
     // Wallet
     /*

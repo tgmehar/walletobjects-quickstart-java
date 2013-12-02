@@ -47,7 +47,7 @@ public class Loyalty {
     LoyaltyPoints points = new LoyaltyPoints()
         .setLabel("Balance")
         .setBalance(new LoyaltyPointsBalance().setString("$25.00"));
-/*
+
     // Define Text Module Data
     List<TextModuleData> textModuleDatas = new ArrayList<TextModuleData>();
 
@@ -90,9 +90,9 @@ public class Loyalty {
     LoyaltyObject object = new LoyaltyObject()
         .setClassId(issuerId + "." + classId).setId(issuerId + "." + objectId)
         .setVersion(1L).setState("active").setBarcode(barcode).setInfoModuleData(infoModuleData)
-        .setMessages(messages).setAccountName("Joe Smith").setTextModuleDatas(textModuleDatas)
+        .setAccountName("Joe Smith").setTextModuleDatas(textModuleDatas)
         .setAccountId("1234567890").setLoyaltyPoints(points).setLinksModuleData(linksModuleData);
-*/
+/*
 
  // Define IssuerData
     TypedValue objectIssuerData = new TypedValue();
@@ -134,7 +134,7 @@ public class Loyalty {
         .setAccountName("Caffeine Jones")
         .setAccountId("12345678901234").setLoyaltyPoints(points)
         .setIssuerData(objectIssuerData);
-
+*/
     return object;
   }
 

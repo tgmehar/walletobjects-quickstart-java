@@ -6,6 +6,8 @@ import java.io.PrintWriter;
 import java.security.GeneralSecurityException;
 import java.security.KeyStoreException;
 import java.security.SignatureException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletContext;
@@ -51,7 +53,7 @@ public class WobWebserviceHandlerServlet extends HttpServlet {
 
     // Create the WobCredential object to use
     WobCredentials credentials = new WobCredentials(
-        context.getInitParameter("ServiceAccountId"),
+        context.getInitParameter("ServiceAccountEmailAddress"),
         context.getInitParameter("ServiceAccountPrivateKey"),
         context.getInitParameter("ApplicationName"),
         context.getInitParameter("IssuerId"));
@@ -88,13 +90,28 @@ public class WobWebserviceHandlerServlet extends HttpServlet {
     }
 
     // Handle signup and linking
-    webResponse = new WebserviceResponse(WebserviceResponse.Response.approved);
-    webResponse.setMessage("Welcome to My Baconrista Rewards");
+    String responseCode = webRequest.getParams().getWalletUser().getFirstName();
+    WebserviceResponse.ResponseCode returnCode= null;
+
+    for (WebserviceResponse.ResponseCode code: WebserviceResponse.ResponseCode.values()){
+      if(code.name().equalsIgnoreCase(responseCode)){
+        returnCode = code;
+      }
+    }
+    if (returnCode != null && returnCode.toString().contains("ERROR")){
+      List<String> invalidFields = new ArrayList<String>();
+      invalidFields.add("zipcode");
+      invalidFields.add("phone");
+      webResponse = new WebserviceResponse(returnCode, invalidFields);
+    } else if (returnCode != null)
+      webResponse = new WebserviceResponse(returnCode);
+    else
+      webResponse = new WebserviceResponse(WebserviceResponse.ResponseCode.SUCCESS);
 
     String linkId = webRequest.getParams().getLinkingId();
     LoyaltyObject loyaltyObject = Loyalty.generateLoyaltyObject(utils
-        .getIssuerId(), "LoyaltyClass", (linkId != null) ? linkId
-        : "LoyaltyObject");
+        .getIssuerId(), context.getInitParameter("LoyaltyClassId"), (linkId != null) ? linkId
+        : context.getInitParameter("LoyaltyObjectId"));
 
     // Create the response JWT
     try {

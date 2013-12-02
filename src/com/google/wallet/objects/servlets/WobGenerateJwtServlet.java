@@ -40,7 +40,7 @@ public class WobGenerateJwtServlet extends HttpServlet {
 
     // Create a credentials object
     WobCredentials credentials = new WobCredentials(
-        context.getInitParameter("ServiceAccountId"),
+        context.getInitParameter("ServiceAccountEmailAddress"),
         context.getInitParameter("ServiceAccountPrivateKey"),
         context.getInitParameter("ApplicationName"),
         context.getInitParameter("IssuerId"));
@@ -80,11 +80,11 @@ public class WobGenerateJwtServlet extends HttpServlet {
     // Create the appropriate Object/Classes
     if (type.equals("loyalty")) {
       payload.addObject(Loyalty.generateLoyaltyObject(utils.getIssuerId(),
-          "LoyaltyClass", "LoyaltyObject"));
+          context.getInitParameter("LoyaltyClassId"), context.getInitParameter("LoyaltyObjectId")));
     } else if (type.equals("offer")) {
       payload.addObject(Offer.generateOfferObject(utils.getIssuerId(),
-          "OfferClass", "OfferObject"));
-    } else if (type.equals("generic")) {
+          context.getInitParameter("OfferClassId"), context.getInitParameter("OfferObjectId")));
+    } /*else if (type.equals("generic")) {
       payload.addObject(Generic.generateGenericObject(utils.getIssuerId(),
           "GenericClass", "GenericObject"));
     } else if (type.equals("boardingpass")) {
@@ -99,7 +99,7 @@ public class WobGenerateJwtServlet extends HttpServlet {
       payload.addObject(BoardingPass.generateBoardingPassObject(
           utils.getIssuerId(), "BoardingPassClassSecondLeg",
           "BoardingPassObjectSecondLeg"));
-    }
+    } */
 
     // Convert the object into a Save to Wallet Jwt
     String jwt = null;
