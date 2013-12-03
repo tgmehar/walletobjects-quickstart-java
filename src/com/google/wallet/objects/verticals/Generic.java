@@ -120,7 +120,7 @@ public class Generic {
             new Image().setSourceUri(new Uri()
                 .setUri("http://www.google.com/landing/chrome/ugc/chrome-icon.jpg")))
         .setRenderSpecs(renderSpec).setMessages(messages)
-        .setReviewStatus("draft").setAllowMultipleUsersPerObject(true)
+        .setReviewStatus("underReview").setAllowMultipleUsersPerObject(true)
         .setLocations(locations).setIssuerData(issuerData);
 
     return wobClass;
