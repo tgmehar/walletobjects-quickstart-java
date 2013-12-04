@@ -32,7 +32,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>
   <context-param>
-      <param-name>ServiceAccountId</param-name>
+      <param-name>ServiceAccountEmailAddress</param-name>
       <param-value>Your OAuth Service Account Email</param-value>
   </context-param>
   <context-param>
