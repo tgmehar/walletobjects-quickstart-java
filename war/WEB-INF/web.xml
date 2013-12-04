@@ -47,4 +47,20 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
       <param-name>ApplicationName</param-name>
       <param-value>Your Application Name</param-value>
   </context-param>
+  <context-param>
+      <param-name>LoyaltyClassId</param-name>
+      <param-value>LoyaltyClass</param-value>
+  </context-param>
+  <context-param>
+      <param-name>LoyaltyObjectId</param-name>
+      <param-value>LoyaltyObject</param-value>
+  </context-param>
+  <context-param>
+      <param-name>OfferClassId</param-name>
+      <param-value>OfferClass</param-value>
+  </context-param>
+  <context-param>
+      <param-name>OfferObjectId</param-name>
+      <param-value>OfferObject</param-value>
+  </context-param>
 </web-app>
