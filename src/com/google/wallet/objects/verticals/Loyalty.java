@@ -179,7 +179,6 @@ public class Loyalty {
         .setVersion(1L)
         .setIssuerName("Baconrista")
         .setProgramName("Baconrista Rewards")
-        .setHomepageUri(new Uri().setUri("https://www.example.com"))
         .setProgramLogo(
             new Image().setSourceUri(new Uri()
                 .setUri("http://farm8.staticflickr.com/7340/11177041185_a61a7f2139_o.jpg")))
