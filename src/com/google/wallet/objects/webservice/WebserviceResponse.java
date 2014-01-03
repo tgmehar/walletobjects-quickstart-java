@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class WebserviceResponse {
   //String message;
-  List<String> invalidField;
+  List<String> invalidWalletUserFields;
 
   ResponseCode status;
 
@@ -33,23 +33,23 @@ public class WebserviceResponse {
     this.status = status;
   }
 
-  public WebserviceResponse(ResponseCode status, List<String> invalidFields) {
+  public WebserviceResponse(ResponseCode status, List<String> invalidWalletUserFields) {
     this.status = status;
-    this.invalidField = invalidFields;
+    this.invalidWalletUserFields = invalidWalletUserFields;
   }
 
   /**
-   * @return the invalidFieldNames
+   * @return the invalidWalletUserFields
    */
-  public List<String> getInvalidFieldNames() {
-    return invalidField;
+  public List<String> getInvalidWalletUserFields() {
+    return invalidWalletUserFields;
   }
 
   /**
-   * @param invalidFieldNames the invalidFieldNames to set
+   * @param invalidWalletUserFields the invalidWalletUserFields to set
    */
-  public void setInvalidFieldNames(List<String> invalidFieldNames) {
-    this.invalidField = invalidFieldNames;
+  public void setInvalidWalletUserFields(List<String> invalidWalletUserFields) {
+    this.invalidWalletUserFields = invalidWalletUserFields;
   }
 
   /**

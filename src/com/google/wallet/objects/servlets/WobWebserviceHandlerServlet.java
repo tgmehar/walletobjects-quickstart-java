@@ -99,10 +99,10 @@ public class WobWebserviceHandlerServlet extends HttpServlet {
       }
     }
     if (returnCode != null && returnCode.toString().contains("ERROR")){
-      List<String> invalidFields = new ArrayList<String>();
-      invalidFields.add("zipcode");
-      invalidFields.add("phone");
-      webResponse = new WebserviceResponse(returnCode, invalidFields);
+      List<String> invalidWalletUserFields = new ArrayList<String>();
+      invalidWalletUserFields.add("zipcode");
+      invalidWalletUserFields.add("phone");
+      webResponse = new WebserviceResponse(returnCode, invalidWalletUserFields);
     } else if (returnCode != null)
       webResponse = new WebserviceResponse(returnCode);
     else
