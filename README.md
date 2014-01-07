@@ -16,3 +16,5 @@ Save to Wallet is handled on both the client and server.  The index.html file is
 
 ## Webservice API
 The Webservice API handler is WobWebserviceHandlerServlet.  This servlet handles Webservice requests, generates Loyalty Objects, converts Loyalty Objects to JWTs, and responds with the JWT.  The URL to this handler is defined within the war/web.xml file.  You can configure your discoverable to point to the URL handled by WobWebserviceHandlerServlet.
+
+[![Analytics](https://ga-beacon.appspot.com/UA-46956809-1/walletobjects-quickstart-java/README.md)](https://github.com/igrigorik/ga-beacon)
