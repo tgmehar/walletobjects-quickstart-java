@@ -11,6 +11,7 @@ import javax.servlet.http.*;
 import com.google.api.client.json.GenericJson;
 import com.google.api.services.walletobjects.Walletobjects;
 import com.google.api.services.walletobjects.model.GenericClass;
+import com.google.api.services.walletobjects.model.GiftCardClass;
 import com.google.api.services.walletobjects.model.LoyaltyClass;
 import com.google.api.services.walletobjects.model.LoyaltyObject;
 import com.google.api.services.walletobjects.model.OfferClass;
@@ -19,6 +20,7 @@ import com.google.wallet.objects.utils.WobUtils;
 import com.google.wallet.objects.verticals.Generic;
 import com.google.wallet.objects.verticals.Loyalty;
 import com.google.wallet.objects.verticals.Offer;
+import com.google.wallet.objects.verticals.GiftCard;
 
 /**
  * This servlet handles requests to insert new Wallet Classes. It parses the
@@ -72,11 +74,14 @@ public class WobInsertServlet extends HttpServlet {
       LoyaltyClass loyaltyClass = Loyalty.generateLoyaltyClass(
           utils.getIssuerId(), context.getInitParameter("LoyaltyClassId"));
       response = client.loyaltyclass().insert(loyaltyClass).execute();
-
     } else if (type.equals("offer")) {
       OfferClass offerClass = Offer.generateOfferClass(utils.getIssuerId(),
           context.getInitParameter("OfferClassId"));
       response = client.offerclass().insert(offerClass).execute();
+    } else if (type.equals("giftcard")) {
+        GiftCardClass giftCardClass = GiftCard.generateGiftCardClass(utils.getIssuerId(),
+            context.getInitParameter("GiftCardClassId"));
+        response = client.giftcardclass().insert(giftCardClass).execute();
     }/* else if (type.equals("generic")) {
       GenericClass genericClass = Generic.generateGenericClass(
           utils.getIssuerId(), "GenericClass");

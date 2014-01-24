@@ -21,6 +21,7 @@ import com.google.wallet.objects.verticals.BoardingPass;
 import com.google.wallet.objects.verticals.Generic;
 import com.google.wallet.objects.verticals.Loyalty;
 import com.google.wallet.objects.verticals.Offer;
+import com.google.wallet.objects.verticals.GiftCard;
 
 /**
  * This servlet generates Save to Wallet JWTs based on the type URL parameter in
@@ -84,6 +85,9 @@ public class WobGenerateJwtServlet extends HttpServlet {
     } else if (type.equals("offer")) {
       payload.addObject(Offer.generateOfferObject(utils.getIssuerId(),
           context.getInitParameter("OfferClassId"), context.getInitParameter("OfferObjectId")));
+    } else if (type.equals("giftcard")) {
+        payload.addObject(GiftCard.generateGiftCardObject(utils.getIssuerId(),
+            context.getInitParameter("GiftCardClassId"), context.getInitParameter("GiftCardObjectId")));
     } /*else if (type.equals("generic")) {
       payload.addObject(Generic.generateGenericObject(utils.getIssuerId(),
           "GenericClass", "GenericObject"));
@@ -93,7 +97,6 @@ public class WobGenerateJwtServlet extends HttpServlet {
       payload.addObject(BoardingPass.generateBoardingPassObject(
           utils.getIssuerId(), "BoardingPassClassFirstLeg",
           "BoardingPassObjectFirstLeg"));
-
       payload.addObject(BoardingPass.generateBoardingPassClass(
           utils.getIssuerId(), "BoardingPassClassSecondLeg"));
       payload.addObject(BoardingPass.generateBoardingPassObject(
