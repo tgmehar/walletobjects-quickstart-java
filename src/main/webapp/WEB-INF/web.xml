@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns="http://java.sun.com/xml/ns/javaee"
+xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+  <servlet>
+    <servlet-name>WobInsert</servlet-name>
+    <servlet-class>com.google.wallet.objects.servlets.WobInsertServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>WobInsert</servlet-name>
+    <url-pattern>/insert</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>WobJwt</servlet-name>
+    <servlet-class>com.google.wallet.objects.servlets.WobGenerateJwtServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>WobJwt</servlet-name>
+    <url-pattern>/jwt</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>Webservice</servlet-name>
+    <servlet-class>com.google.wallet.objects.servlets.WobWebserviceHandlerServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Webservice</servlet-name>
+    <url-pattern>/webservice</url-pattern>
+  </servlet-mapping>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+    <context-param>
+        <param-name>ServiceAccountEmailAddress</param-name>
+        <param-value>765560632621-v9ktieri5cm5rjblr06teo1th8fts7ha@developer.gserviceaccount.com</param-value>
+    </context-param>
+    <context-param>
+        <param-name>ServiceAccountPrivateKey</param-name>
+        <param-value>WEB-INF/classes/key.p12</param-value>
+    </context-param>
+    <context-param>
+        <param-name>IssuerId</param-name>
+        <param-value>2951238800106304306</param-value>
+    </context-param>
+  <context-param>
+      <param-name>ApplicationName</param-name>
+      <param-value>Your Application Name</param-value>
+  </context-param>
+  <context-param>
+      <param-name>LoyaltyClassId</param-name>
+      <param-value>LoyaltyClass</param-value>
+  </context-param>
+  <context-param>
+      <param-name>LoyaltyObjectId</param-name>
+      <param-value>LoyaltyObject</param-value>
+  </context-param>
+  <context-param>
+      <param-name>OfferClassId</param-name>
+      <param-value>OfferClass</param-value>
+  </context-param>
+  <context-param>
+      <param-name>OfferObjectId</param-name>
+      <param-value>OfferObject</param-value>
+  </context-param>
+  <context-param>
+      <param-name>GiftCardClassId</param-name>
+      <param-value>GiftCardClass</param-value>
+  </context-param>
+  <context-param>
+      <param-name>GiftCardObjectId</param-name>
+      <param-value>GiftCardObject</param-value>
+  </context-param>
+</web-app>
