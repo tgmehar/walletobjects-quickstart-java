@@ -33,15 +33,15 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   </welcome-file-list>
     <context-param>
         <param-name>ServiceAccountEmailAddress</param-name>
-        <param-value>765560632621-v9ktieri5cm5rjblr06teo1th8fts7ha@developer.gserviceaccount.com</param-value>
+        <param-value>Your Service Account Email</param-value>
     </context-param>
     <context-param>
         <param-name>ServiceAccountPrivateKey</param-name>
-        <param-value>WEB-INF/classes/key.p12</param-value>
+        <param-value>WEB-INF/classes/yourkey.p12</param-value>
     </context-param>
     <context-param>
         <param-name>IssuerId</param-name>
-        <param-value>2951238800106304306</param-value>
+        <param-value>Your Issuer Id</param-value>
     </context-param>
   <context-param>
       <param-name>ApplicationName</param-name>
@@ -57,11 +57,11 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   </context-param>
   <context-param>
       <param-name>OfferClassId</param-name>
-      <param-value>OfferClass</param-value>
+      <param-value>OfferClassMonster3</param-value>
   </context-param>
   <context-param>
       <param-name>OfferObjectId</param-name>
-      <param-value>OfferObject</param-value>
+      <param-value>OfferObjectMonster3</param-value>
   </context-param>
   <context-param>
       <param-name>GiftCardClassId</param-name>

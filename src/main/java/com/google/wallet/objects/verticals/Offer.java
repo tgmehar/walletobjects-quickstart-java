@@ -3,14 +3,7 @@ package com.google.wallet.objects.verticals;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.api.services.walletobjects.model.Barcode;
-import com.google.api.services.walletobjects.model.Image;
-import com.google.api.services.walletobjects.model.LatLongPoint;
-import com.google.api.services.walletobjects.model.OfferClass;
-import com.google.api.services.walletobjects.model.OfferObject;
-import com.google.api.services.walletobjects.model.RenderSpec;
-import com.google.api.services.walletobjects.model.TextModuleData;
-import com.google.api.services.walletobjects.model.Uri;
+import com.google.api.services.walletobjects.model.*;
 
 /**
  * Generates an example Offer Class and Object
@@ -35,22 +28,6 @@ public class Offer {
     Barcode barcode = new Barcode().setType("upcA").setValue("123456789012")
         .setAlternateText("12345").setLabel("User Id");
 
-    // Define Uris
-    List<Uri> uris = new ArrayList<Uri>();
-    Uri uri1 = new Uri().setDescription("Help").setUri("http://wallet.google.com");
-    Uri uri2 = new Uri().setDescription("Documentation").setUri("http://developers.google.com/commerce/wallet/objects");
-    uris.add(uri1);
-    uris.add(uri2);
-
-    // Define Text Areas
-    List<TextModuleData> textModulesData = new ArrayList<TextModuleData>();
-
-    TextModuleData details = new TextModuleData().setHeader("Details").setBody("20% off one cup of coffee per visit");
-    TextModuleData finePrint = new TextModuleData().setHeader("Fineprint").setBody("Limit one per customer per bearer token");
-
-    textModulesData.add(details);
-    textModulesData.add(finePrint);
-
     // Define Wallet Object
     OfferObject object = new OfferObject().setClassId(issuerId + "." + classId)
         .setId(issuerId + "." + objectId).setVersion(1L).setBarcode(barcode)
@@ -69,36 +46,70 @@ public class Offer {
   public static OfferClass generateOfferClass(String issuerId,
       String classId) {
 
+    // Define templates to use
     List<RenderSpec> renderSpec = new ArrayList<RenderSpec>();
 
     RenderSpec listRenderSpec = new RenderSpec().setViewName("g_list")
-        .setTemplateFamily("1.offer1_list");
+        .setTemplateFamily("1.offer_list");
     RenderSpec expandedRenderSpec = new RenderSpec().setViewName("g_expanded")
-        .setTemplateFamily("1.offer1_expanded");
+        .setTemplateFamily("1.offer_expanded");
 
     renderSpec.add(listRenderSpec);
     renderSpec.add(expandedRenderSpec);
 
+    // Define the Image Module Data
+    List<ImageModuleData> imageModuleData = new ArrayList<ImageModuleData>();
+
+    ImageModuleData image = new ImageModuleData().setMainImage(
+        new Image().setSourceUri(
+            new Uri().setUri("http://farm4.staticflickr.com/3738/12440799783_3dc3c20606_b.jpg")));
+
+    imageModuleData.add(image);
+
+    // Define Links Module Data
+    List<Uri> uris = new ArrayList<Uri>();
+    Uri uri1 = new Uri().setDescription("Nearby Locations").setUri("geo:0,0?q=google");
+    Uri uri2 = new Uri().setDescription("Call Customer Service").setUri("tel:6505555555");
+
+    uris.add(uri1);
+    uris.add(uri2);
+
+    LinksModuleData linksModuleData = new LinksModuleData().setUris(uris);
+
+    // Define Text Areas
+    List<TextModuleData> textModulesData = new ArrayList<TextModuleData>();
+
+    TextModuleData details = new TextModuleData().setHeader("Details").setBody("20% off one cup of coffee at all Baconrista Coffee locations.  Only one can be used per visit.");
+    TextModuleData finePrint = new TextModuleData().setHeader("About Baconrista").setBody("Since 2013, Baconrista Coffee has been committed to making high quality bacon coffee. Visit us in our stores or online at www.baconrista.com");
+
+    textModulesData.add(details);
+    textModulesData.add(finePrint);
+
+    // Define Geofence locations
     List<LatLongPoint> locations = new ArrayList<LatLongPoint>();
-    locations.add(new LatLongPoint().setLatitude(37.442087).setLongitude(
-        -122.161446));
-    locations.add(new LatLongPoint().setLatitude(37.429379).setLongitude(
-        -122.122730));
-    locations.add(new LatLongPoint().setLatitude(37.333646).setLongitude(
-        -121.884853));
+    locations.add(new LatLongPoint().setLatitude(37.422601).setLongitude(
+        -122.085286));
+    locations.add(new LatLongPoint().setLatitude(37.424354).setLongitude(
+        -122.09508869999999));
+    locations.add(new LatLongPoint().setLatitude(40.7406578).setLongitude(
+        -74.00208940000002));
 
     OfferClass wobClass = new OfferClass()
         .setId(issuerId + "." + classId)
         .setVersion(1L)
         .setIssuerName("Baconrista Coffee")
-        .setTitle("20% off one cup of coffee")
+        .setTitle("20% off one bacon fat latte")
         .setProvider("Baconrista Deals")
         .setTitleImage(
             new Image().setSourceUri(new Uri()
-                .setUri("http://3.bp.blogspot.com/-AvC1agljv9Y/TirbDXOBIPI/AAAAAAAACK0/hR2gs5h2H6A/s1600/Bacon%2BWallpaper.png")))
+                .setUri("http://farm4.staticflickr.com/3723/11177041115_6e6a3b6f49_o.jpg")))
         .setRenderSpecs(renderSpec).setRedemptionChannel("both")
         .setReviewStatus("underReview")
+        .setLinksModuleData(linksModuleData)
+        .setImageModulesData(imageModuleData)
+        .setTextModulesData(textModulesData)
         .setLocations(locations).setAllowMultipleUsersPerObject(true);
+
     return wobClass;
   }
 }

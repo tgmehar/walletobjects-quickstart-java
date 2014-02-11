@@ -3,24 +3,19 @@ package com.google.wallet.objects.servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.GeneralSecurityException;
-import java.security.KeyStoreException;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.*;
 
 import com.google.api.client.json.GenericJson;
 import com.google.api.services.walletobjects.Walletobjects;
-import com.google.api.services.walletobjects.model.GenericClass;
-import com.google.api.services.walletobjects.model.GiftCardClass;
 import com.google.api.services.walletobjects.model.LoyaltyClass;
-import com.google.api.services.walletobjects.model.LoyaltyObject;
 import com.google.api.services.walletobjects.model.OfferClass;
+import com.google.wallet.objects.utils.Config;
+import com.google.wallet.objects.utils.WobClientFactory;
 import com.google.wallet.objects.utils.WobCredentials;
-import com.google.wallet.objects.utils.WobUtils;
-import com.google.wallet.objects.verticals.Generic;
 import com.google.wallet.objects.verticals.Loyalty;
 import com.google.wallet.objects.verticals.Offer;
-import com.google.wallet.objects.verticals.GiftCard;
 
 /**
  * This servlet handles requests to insert new Wallet Classes. It parses the
@@ -34,33 +29,23 @@ import com.google.wallet.objects.verticals.GiftCard;
 @SuppressWarnings("serial")
 public class WobInsertServlet extends HttpServlet {
 
-  public void doGet(HttpServletRequest req, HttpServletResponse resp)
-      throws IOException {
+  public void doGet(HttpServletRequest req, HttpServletResponse resp) {
 
     // Access credentials from web.xml
     ServletContext context = getServletContext();
 
-    // Create the WobCredential object to use
-    WobCredentials credentials = new WobCredentials(
-        context.getInitParameter("ServiceAccountEmailAddress"),
-        context.getInitParameter("ServiceAccountPrivateKey"),
-        context.getInitParameter("ApplicationName"),
-        context.getInitParameter("IssuerId"));
+    Config config = Config.getInstance();
 
-    // Create WobUilts object to handle the heavy lifting
-    WobUtils utils = null;
+    // Create a credentials object
+    WobCredentials credentials = null;
     Walletobjects client = null;
+
     try {
-      utils = new WobUtils(credentials);
-      client = utils.getClient();
-    } catch (KeyStoreException e) {
-      // Add code to catch errors
-      e.printStackTrace();
+      credentials = config.getCredentials(context);
+      client = WobClientFactory.getWalletObjectsClient(credentials);
     } catch (IOException e) {
-      // Add code to catch errors
       e.printStackTrace();
     } catch (GeneralSecurityException e) {
-      // Add code to catch errors
       e.printStackTrace();
     }
 
@@ -72,17 +57,25 @@ public class WobInsertServlet extends HttpServlet {
     // Create and insert type
     if (type.equals("loyalty")) {
       LoyaltyClass loyaltyClass = Loyalty.generateLoyaltyClass(
-          utils.getIssuerId(), context.getInitParameter("LoyaltyClassId"));
-      response = client.loyaltyclass().insert(loyaltyClass).execute();
+          credentials.getIssuerId(), context.getInitParameter("LoyaltyClassId"));
+      try {
+        response = client.loyaltyclass().insert(loyaltyClass).execute();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
     } else if (type.equals("offer")) {
-      OfferClass offerClass = Offer.generateOfferClass(utils.getIssuerId(),
+      OfferClass offerClass = Offer.generateOfferClass(credentials.getIssuerId(),
           context.getInitParameter("OfferClassId"));
-      response = client.offerclass().insert(offerClass).execute();
-    } else if (type.equals("giftcard")) {
-        GiftCardClass giftCardClass = GiftCard.generateGiftCardClass(utils.getIssuerId(),
+      try {
+        response = client.offerclass().insert(offerClass).execute();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    } /*else if (type.equals("giftcard")) {
+        GiftCardClass giftCardClass = GiftCard.generateGiftCardClass(credentials.getIssuerId(),
             context.getInitParameter("GiftCardClassId"));
         response = client.giftcardclass().insert(giftCardClass).execute();
-    }/* else if (type.equals("generic")) {
+    } else if (type.equals("generic")) {
       GenericClass genericClass = Generic.generateGenericClass(
           utils.getIssuerId(), "GenericClass");
       response = client.genericclass().insert(genericClass).execute();
@@ -99,7 +92,12 @@ public class WobInsertServlet extends HttpServlet {
      */
 
     // Respond to request with class json
-    PrintWriter out = resp.getWriter();
+    PrintWriter out = null;
+    try {
+      out = resp.getWriter();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
     out.write(response.toString());
   }
 }

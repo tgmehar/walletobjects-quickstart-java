@@ -1,10 +1,8 @@
 package com.google.wallet.objects.servlets;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.GeneralSecurityException;
-import java.security.KeyStoreException;
 import java.security.SignatureException;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +17,7 @@ import com.google.api.services.walletobjects.model.LoyaltyObject;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
+import com.google.wallet.objects.utils.Config;
 import com.google.wallet.objects.utils.WobCredentials;
 import com.google.wallet.objects.utils.WobUtils;
 import com.google.wallet.objects.verticals.Loyalty;
@@ -48,18 +47,23 @@ public class WobWebserviceHandlerServlet extends HttpServlet {
   public void doPost(HttpServletRequest req, HttpServletResponse resp) {
     Gson gson = new Gson();
 
-    // Access credentials from web.xml
     ServletContext context = getServletContext();
+    Config config = Config.getInstance();
 
-    // Create the WobCredential object to use
-    WobCredentials credentials = new WobCredentials(
-        context.getInitParameter("ServiceAccountEmailAddress"),
-        context.getInitParameter("ServiceAccountPrivateKey"),
-        context.getInitParameter("ApplicationName"),
-        context.getInitParameter("IssuerId"));
+    // Create a credentials object
+    WobCredentials credentials = null;
+    WobUtils utils = null;
+
+    try {
+      credentials = config.getCredentials(context);
+      utils = new WobUtils(credentials);
+    } catch (GeneralSecurityException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
 
     // Create WobUilts object to handle the heavy lifting
-    WobUtils utils = null;
     WebserviceRequest webRequest = null;
     WebserviceResponse webResponse = null;
     PrintWriter out = null;
@@ -69,18 +73,8 @@ public class WobWebserviceHandlerServlet extends HttpServlet {
     try {
       webRequest = gson.fromJson(req.getReader(), WebserviceRequest.class);
       logger.info(gson.toJson(webRequest));
-      utils = new WobUtils(credentials);
       out = resp.getWriter();
-    } catch (FileNotFoundException e) {
-      // Add code to catch errors
-      e.printStackTrace();
-    } catch (KeyStoreException e) {
-      // Add code to catch errors
-      e.printStackTrace();
     } catch (IOException e) {
-      // Add code to catch errors
-      e.printStackTrace();
-    } catch (GeneralSecurityException e) {
       // Add code to catch errors
       e.printStackTrace();
     } catch (JsonSyntaxException e) {
@@ -109,7 +103,7 @@ public class WobWebserviceHandlerServlet extends HttpServlet {
       webResponse = new WebserviceResponse(WebserviceResponse.ResponseCode.SUCCESS);
 
     String linkId = webRequest.getParams().getLinkingId();
-    LoyaltyObject loyaltyObject = Loyalty.generateLoyaltyObject(utils
+    LoyaltyObject loyaltyObject = Loyalty.generateLoyaltyObject(credentials
         .getIssuerId(), context.getInitParameter("LoyaltyClassId"), (linkId != null) ? linkId
         : context.getInitParameter("LoyaltyObjectId"));
 

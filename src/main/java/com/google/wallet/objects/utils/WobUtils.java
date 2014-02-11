@@ -45,19 +45,21 @@ public class WobUtils {
 
   private final String SAVE_TO_WALLET = "savetowallet";
   private final String LOYALTY_WEB = "loyaltywebservice";
-  private final String WOB_PROD = "https://www.googleapis.com/auth/wallet_object.issuer";
-  private final String WOB_SANDBOX = "https://www.googleapis.com/auth/wallet_object_sandbox.issuer";
   private final String GOOGLE = "google";
 
   private final String serviceAccountId;
-  private final RSAPrivateKey rsaKey;
-  private final String applicationName;
-  private final String issuerId;
 
-  private GoogleCredential credential = null;
 
-  private HttpTransport httpTransport;
-  private JsonFactory jsonFactory;
+//  public enum IconType {
+//    EMPTY_ICON,
+//    EARNINGS,
+//    DISCOUNTS,
+//    AWARDS,
+//    SHIPPING,
+//    SOFT_BENEFITS,
+//    DISCLAIMER
+//  }
+
 
   RsaSHA256Signer signer = null;
   Gson gson = new Gson();
@@ -72,76 +74,9 @@ public class WobUtils {
    * @throws KeyStoreException
    * @throws GeneralSecurityException
    */
-  public WobUtils(WobCredentials credentials) throws FileNotFoundException,
-      IOException, KeyStoreException, GeneralSecurityException {
+  public WobUtils(WobCredentials credentials) throws IOException, GeneralSecurityException {
     serviceAccountId = credentials.getServiceAccountId();
-    applicationName = credentials.getApplicationName();
-    issuerId = credentials.getIssuerId();
-    httpTransport = new NetHttpTransport();
-    jsonFactory = new GsonFactory();
-
-    // Check if a RSAPrivateKey is defined or if we need to generate it from a
-    // file
-    if (credentials.getServiceAccountPrivateKey() != null) {
-      rsaKey = credentials.getServiceAccountPrivateKey();
-    } else {
-      String rsaKeyPath = credentials.getServiceAccountPrivateKeyPath();
-      File file = new File(rsaKeyPath);
-      byte[] bytes = ByteStreams.toByteArray(new FileInputStream(file));
-      InputStream keyStream = new ByteArrayInputStream(bytes);
-      rsaKey = (RSAPrivateKey) SecurityUtils.loadPrivateKeyFromKeyStore(
-          SecurityUtils.getPkcs12KeyStore(), keyStream, "notasecret",
-          "privatekey", "notasecret");
-    }
-    signer = new RsaSHA256Signer(serviceAccountId, null, rsaKey);
-  }
-
-  /**
-   * Creates a Walletobjects client with production scopes
-   *
-   * @return Walletobjects client
-   * @throws GeneralSecurityException
-   * @throws IOException
-   */
-  public Walletobjects getClient() throws GeneralSecurityException, IOException {
-    credential = getCredential();
-
-    return new Walletobjects.Builder(httpTransport, jsonFactory, credential)//.setRootUrl("https://www-googleapis-staging.sandbox.google.com")
-        .setApplicationName(applicationName).build();
-  }
-
-  /**
-   * Helper function to generate the Google Credential
-   *
-   * @return
-   * @throws GeneralSecurityException
-   * @throws IOException
-   */
-  public GoogleCredential getCredential() throws GeneralSecurityException,
-      IOException {
-    List<String> scopes = new ArrayList<String>();
-    scopes.add(WOB_PROD);
-    scopes.add(WOB_SANDBOX);
-
-    return credential = new GoogleCredential.Builder()
-        .setTransport(httpTransport).setJsonFactory(jsonFactory)
-        .setServiceAccountId(serviceAccountId).setServiceAccountScopes(scopes)
-        .setServiceAccountPrivateKey(rsaKey).build();
-  }
-
-  /**
-   * Refreshes the access token and returns it.
-   *
-   * @return OAuth access token
-   * @throws GeneralSecurityException
-   * @throws IOException
-   */
-  public String accessToken() throws GeneralSecurityException, IOException {
-    if (credential == null) {
-      credential = getCredential();
-    }
-    credential.refreshToken();
-    return credential.getAccessToken();
+    signer = new RsaSHA256Signer(serviceAccountId, null, credentials.getServiceAccountPrivateKey());
   }
 
   /**
@@ -232,44 +167,5 @@ public class WobUtils {
   public static DateTime toDateTime(String rfc3339) {
     return new DateTime().setDate(com.google.api.client.util.DateTime
         .parseRfc3339(rfc3339));
-  }
-
-  /**
-   * Returns Service Account id for quick access
-   *
-   * @return
-   */
-  public String getServiceAccountId() {
-    return serviceAccountId;
-  }
-
-  /**
-   * Returns Issuer Id for quick access
-   *
-   * @return
-   */
-  public String getIssuerId() {
-    return issuerId;
-  }
-
-  /**
-   * Converts base64 encoded RSA Private Key String to RSAPrivateKey object
-   *
-   * Useful if you want to hardcode your RSA Private Key as a variable i.e. in
-   * testing
-   *
-   * @param keyString
-   * @return
-   * @throws KeyStoreException
-   * @throws IOException
-   * @throws GeneralSecurityException
-   */
-  public static RSAPrivateKey generateRsaPrivateKey(String keyString)
-      throws KeyStoreException, IOException, GeneralSecurityException {
-    InputStream keyStream = new ByteArrayInputStream(
-        Base64.decodeBase64(keyString));
-    return (RSAPrivateKey) SecurityUtils.loadPrivateKeyFromKeyStore(
-        SecurityUtils.getPkcs12KeyStore(), keyStream, "notasecret",
-        "privatekey", "notasecret");
   }
 }

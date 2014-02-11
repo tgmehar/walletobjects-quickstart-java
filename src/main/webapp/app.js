@@ -26,12 +26,12 @@ function init(){
       console.log(data);
     })
   });
-  document.getElementById("giftcard").addEventListener("click", function(){
+  /*document.getElementById("giftcard").addEventListener("click", function(){
 	    $.get("insert?type=giftcard", function(data){
 	      console.log(data);
 	    })
   });
-  /*document.getElementById("generic").addEventListener("click", function(){
+  document.getElementById("generic").addEventListener("click", function(){
     $.get("insert?type=generic", function(data){
       console.log(data);
     })
@@ -48,13 +48,13 @@ function init(){
       saveToWallet.setAttribute("jwt", data);
       saveToWallet.setAttribute("onsuccess","successHandler");
       saveToWallet.setAttribute("onfailure","failureHandler");
-      document.querySelector("#offersave").appendChild(saveToWallet);}),
+      document.querySelector("#offersave").appendChild(saveToWallet);})/*,
       $.get("jwt?type=giftcard", function(data){
       saveToWallet = document.createElement("g:savetowallet");
       saveToWallet.setAttribute("jwt", data);
       saveToWallet.setAttribute("onsuccess","successHandler");
       saveToWallet.setAttribute("onfailure","failureHandler");
-      document.querySelector("#giftcardsave").appendChild(saveToWallet);})/*,
+      document.querySelector("#giftcardsave").appendChild(saveToWallet);}),
       $.get("jwt?type=generic", function(data){
       saveToWallet = document.createElement("g:savetowallet");
       saveToWallet.setAttribute("jwt", data);

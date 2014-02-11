@@ -1,10 +1,8 @@
 package com.google.wallet.objects.servlets;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.GeneralSecurityException;
-import java.security.KeyStoreException;
 import java.security.SignatureException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +12,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.wallet.objects.utils.Config;
 import com.google.wallet.objects.utils.WobCredentials;
 import com.google.wallet.objects.utils.WobPayload;
 import com.google.wallet.objects.utils.WobUtils;
-import com.google.wallet.objects.verticals.BoardingPass;
-import com.google.wallet.objects.verticals.Generic;
 import com.google.wallet.objects.verticals.Loyalty;
 import com.google.wallet.objects.verticals.Offer;
 import com.google.wallet.objects.verticals.GiftCard;
@@ -34,36 +31,25 @@ import com.google.wallet.objects.verticals.GiftCard;
  */
 @SuppressWarnings("serial")
 public class WobGenerateJwtServlet extends HttpServlet {
-  public void doGet(HttpServletRequest req, HttpServletResponse resp)
-      throws IOException {
+  public void doGet(HttpServletRequest req, HttpServletResponse resp) {
     // Access credentials from web.xml
     ServletContext context = getServletContext();
 
-    // Create a credentials object
-    WobCredentials credentials = new WobCredentials(
-        context.getInitParameter("ServiceAccountEmailAddress"),
-        context.getInitParameter("ServiceAccountPrivateKey"),
-        context.getInitParameter("ApplicationName"),
-        context.getInitParameter("IssuerId"));
+    Config config = Config.getInstance();
 
+    // Create a credentials object
+    WobCredentials credentials = null;
     WobUtils utils = null;
 
-    // Instantiate the WobUtils class which contains lots of handy functions
     try {
+      credentials = config.getCredentials(context);
       utils = new WobUtils(credentials);
-    } catch (FileNotFoundException e) {
-      // Add code to handle errors
-      e.printStackTrace();
-    } catch (KeyStoreException e) {
-      // Add code to handle errors
+    } catch (GeneralSecurityException e) {
       e.printStackTrace();
     } catch (IOException e) {
-      // Add code to catch errors
-      e.printStackTrace();
-    } catch (GeneralSecurityException e) {
-      // Add code to handle errors
       e.printStackTrace();
     }
+
 
     // Get type of JWT to generate
     String type = req.getParameter("type");
@@ -80,13 +66,13 @@ public class WobGenerateJwtServlet extends HttpServlet {
 
     // Create the appropriate Object/Classes
     if (type.equals("loyalty")) {
-      payload.addObject(Loyalty.generateLoyaltyObject(utils.getIssuerId(),
+      payload.addObject(Loyalty.generateLoyaltyObject(credentials.getIssuerId(),
           context.getInitParameter("LoyaltyClassId"), context.getInitParameter("LoyaltyObjectId")));
     } else if (type.equals("offer")) {
-      payload.addObject(Offer.generateOfferObject(utils.getIssuerId(),
+      payload.addObject(Offer.generateOfferObject(credentials.getIssuerId(),
           context.getInitParameter("OfferClassId"), context.getInitParameter("OfferObjectId")));
     } else if (type.equals("giftcard")) {
-        payload.addObject(GiftCard.generateGiftCardObject(utils.getIssuerId(),
+        payload.addObject(GiftCard.generateGiftCardObject(credentials.getIssuerId(),
             context.getInitParameter("GiftCardClassId"), context.getInitParameter("GiftCardObjectId")));
     } /*else if (type.equals("generic")) {
       payload.addObject(Generic.generateGenericObject(utils.getIssuerId(),
@@ -106,14 +92,17 @@ public class WobGenerateJwtServlet extends HttpServlet {
 
     // Convert the object into a Save to Wallet Jwt
     String jwt = null;
+    // Respond with JWT
+    PrintWriter out = null;
+
     try {
       jwt = utils.generateSaveJwt(payload, origins);
+      out = resp.getWriter();
+    } catch (IOException e) {
+      e.printStackTrace();
     } catch (SignatureException e) {
       e.printStackTrace();
     }
-
-    // Respond with JWT
-    PrintWriter out = resp.getWriter();
     out.write(jwt);
   }
 
