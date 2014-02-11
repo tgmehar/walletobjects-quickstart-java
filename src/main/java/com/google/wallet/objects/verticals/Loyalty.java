@@ -141,7 +141,7 @@ public class Loyalty {
 
     // Define Links Module Data
     List<Uri> uris = new ArrayList<Uri>();
-    Uri uri1 = new Uri().setDescription("Nearby Locations").setUri("geo:0,0?q=google");
+    Uri uri1 = new Uri().setDescription("Nearby Locations").setUri("http://maps.google.com/maps?q=google");
     Uri uri2 = new Uri().setDescription("Call Customer Service").setUri("tel:6505555555");
 
     uris.add(uri1);
