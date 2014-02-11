@@ -7,7 +7,6 @@ import java.util.List;
  * Google
  *
  * @author pying
- *
  */
 public class WebserviceResponse {
   //String message;
@@ -15,7 +14,7 @@ public class WebserviceResponse {
 
   ResponseCode status;
 
-  public enum ResponseCode{
+  public enum ResponseCode {
     ERROR_INVALID_DATA_FORMAT,
     ERROR_DATA_ON_MERCHANT_RECORD_DIFFERENT,
     ERROR_INVALID_LINKING_ID,
@@ -29,7 +28,7 @@ public class WebserviceResponse {
   public WebserviceResponse() {
   }
 
-  public WebserviceResponse(ResponseCode status){
+  public WebserviceResponse(ResponseCode status) {
     this.status = status;
   }
 

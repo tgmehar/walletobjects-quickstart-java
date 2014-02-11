@@ -5,3 +5,4 @@ classes/
 .settings
 .git
 *.iml
+key.p12

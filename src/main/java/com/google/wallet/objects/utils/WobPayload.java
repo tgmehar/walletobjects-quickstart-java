@@ -25,7 +25,6 @@ import com.google.wallet.objects.webservice.WebserviceResponse;
  * correct array to insert into.
  *
  * @author pying
- *
  */
 public class WobPayload {
   private List<GenericJson> loyaltyClasses = new ArrayList<GenericJson>();
@@ -64,7 +63,7 @@ public class WobPayload {
     } else if (OfferObject.class.isAssignableFrom(object.getClass())) {
       addOfferObject(gson.fromJson(object.toString(), GenericJson.class));
     } else if (GiftCardObject.class.isAssignableFrom(object.getClass())) {
-        addGiftCardObject(gson.fromJson(object.toString(), GenericJson.class));
+      addGiftCardObject(gson.fromJson(object.toString(), GenericJson.class));
     } else if (GenericObject.class.isAssignableFrom(object.getClass())) {
       addGenericObject(gson.fromJson(object.toString(), GenericJson.class));
     } else if (BoardingPassObject.class.isAssignableFrom(object.getClass())) {
@@ -76,7 +75,7 @@ public class WobPayload {
     } else if (OfferClass.class.isAssignableFrom(object.getClass())) {
       addOfferClass(gson.fromJson(object.toString(), GenericJson.class));
     } else if (GiftCardClass.class.isAssignableFrom(object.getClass())) {
-        addGiftCardClass(gson.fromJson(object.toString(), GenericJson.class));
+      addGiftCardClass(gson.fromJson(object.toString(), GenericJson.class));
     } else if (GenericClass.class.isAssignableFrom(object.getClass())) {
       addGenericClass(gson.fromJson(object.toString(), GenericJson.class));
     } else
@@ -109,15 +108,15 @@ public class WobPayload {
   }
 
   public void addGiftCardObject(GenericJson object) {
-	  giftCardObjects.add(object);
+    giftCardObjects.add(object);
   }
 
   public List<GenericJson> getGiftCardObjects() {
-	  return giftCardObjects;
+    return giftCardObjects;
   }
 
   public void setGiftCardObjects(List<GenericJson> giftCardObject) {
-	  this.giftCardObjects = giftCardObject;
+    this.giftCardObjects = giftCardObject;
   }
 
   public void addGenericObject(GenericJson object) {
@@ -160,8 +159,7 @@ public class WobPayload {
   }
 
   /**
-   * @param loyaltyClasses
-   *          the loyaltyClasses to set
+   * @param loyaltyClasses the loyaltyClasses to set
    */
   public void setLoyaltyClasses(List<GenericJson> loyaltyClasses) {
     this.loyaltyClasses = loyaltyClasses;
@@ -179,8 +177,7 @@ public class WobPayload {
   }
 
   /**
-   * @param offerClasses
-   *          the offerClasses to set
+   * @param offerClasses the offerClasses to set
    */
   public void setOfferClasses(List<GenericJson> offerClasses) {
     this.offerClasses = offerClasses;
@@ -199,15 +196,14 @@ public class WobPayload {
   }
 
   /**
-   * @param giftCardClasses
-   *          the offerClasses to set
+   * @param giftCardClasses the offerClasses to set
    */
   public void setGiftCardClasses(List<GenericJson> giftCardClasses) {
     this.giftCardClasses = giftCardClasses;
   }
 
   public void addGiftCardClass(GenericJson object) {
-	  giftCardClasses.add(object);
+    giftCardClasses.add(object);
   }
 
   /**
@@ -218,8 +214,7 @@ public class WobPayload {
   }
 
   /**
-   * @param genericClasses
-   *          the genericClasses to set
+   * @param genericClasses the genericClasses to set
    */
   public void setGenericClasses(List<GenericJson> genericClasses) {
     this.genericClasses = genericClasses;
@@ -237,8 +232,7 @@ public class WobPayload {
   }
 
   /**
-   * @param boardingPassClasses
-   *          the boardingPassClasses to set
+   * @param boardingPassClasses the boardingPassClasses to set
    */
   public void setBoardingPassClasses(List<GenericJson> boardingPassClasses) {
     this.boardingPassClasses = boardingPassClasses;

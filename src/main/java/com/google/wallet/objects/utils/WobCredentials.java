@@ -50,7 +50,7 @@ public class WobCredentials {
    * @param issuerId
    */
   public WobCredentials(String serviceAccountId, String privateKeyPath,
-                        String applicationName, String issuerId) throws IOException, GeneralSecurityException {
+      String applicationName, String issuerId) throws IOException, GeneralSecurityException {
     setServiceAccountId(serviceAccountId);
     setServiceAccountPrivateKeyPath(privateKeyPath);
     setApplicationName(applicationName);
@@ -68,7 +68,7 @@ public class WobCredentials {
    * @param issuerId
    */
   public WobCredentials(String serviceAccountId, RSAPrivateKey privateKey,
-                        String applicationName, String issuerId) {
+      String applicationName, String issuerId) {
     setServiceAccountId(serviceAccountId);
     setServiceAccountPrivateKey(privateKey);
     setApplicationName(applicationName);
@@ -169,7 +169,9 @@ public class WobCredentials {
   }
 
   public String toString() {
-    StringBuilder sb = new StringBuilder().append(serviceAccountId).append(serviceAccountPrivateKeyPath).append(applicationName).append(issuerId).append(new String(serviceAccountPrivateKey.getEncoded()));
+    StringBuilder sb =
+        new StringBuilder().append(serviceAccountId).append(serviceAccountPrivateKeyPath).append(applicationName)
+            .append(issuerId).append(new String(serviceAccountPrivateKey.getEncoded()));
     return sb.toString();
   }
 

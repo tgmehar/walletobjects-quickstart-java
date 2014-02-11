@@ -23,9 +23,10 @@ public class WobClientFactory {
     String key = credential.toString();
     Walletobjects client = clients.get(key);
     if (client == null) {
-      client = new Walletobjects.Builder(credential.httpTransport, credential.jsonFactory, credential.getGoogleCredential())
-          //.setRootUrl("https://www-googleapis-staging.sandbox.google.com")
-          .setApplicationName(credential.getApplicationName()).build();
+      client =
+          new Walletobjects.Builder(credential.httpTransport, credential.jsonFactory, credential.getGoogleCredential())
+              //.setRootUrl("https://www-googleapis-staging.sandbox.google.com")
+              .setApplicationName(credential.getApplicationName()).build();
       clients.put(key, client);
     }
     return client;

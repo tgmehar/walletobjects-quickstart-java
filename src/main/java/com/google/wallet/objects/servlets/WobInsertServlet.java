@@ -24,7 +24,6 @@ import com.google.wallet.objects.verticals.Offer;
  * you comment that section out).
  *
  * @author pying
- *
  */
 @SuppressWarnings("serial")
 public class WobInsertServlet extends HttpServlet {

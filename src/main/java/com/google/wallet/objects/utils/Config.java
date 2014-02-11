@@ -15,10 +15,11 @@ public class Config {
 
   private static Map<String, WobCredentials> credentials;
 
-  private Config() {}
+  private Config() {
+  }
 
-  public static Config getInstance(){
-    if (config == null){
+  public static Config getInstance() {
+    if (config == null) {
 
       config = new Config();
       credentials = new HashMap<String, WobCredentials>();

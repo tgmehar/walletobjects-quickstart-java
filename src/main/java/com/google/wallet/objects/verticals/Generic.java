@@ -20,7 +20,6 @@ import com.google.api.services.walletobjects.model.WalletObjectMessage;
  * when the next book is due.
  *
  * @author pying
- *
  */
 public class Generic {
 
@@ -71,22 +70,22 @@ public class Generic {
             "col0",
             new TypedValue()
                 .set("label", new TypedValue().setString("Label 0")).set(
-                    "value", new TypedValue().setString("Value 0"))).set(
+                "value", new TypedValue().setString("Value 0"))).set(
             "col1",
             new TypedValue()
                 .set("label", new TypedValue().setString("Label 1")).set(
-                    "value", new TypedValue().setString("Value1"))));
+                "value", new TypedValue().setString("Value1"))));
     infoModule.put(
         "row1",
         new TypedValue().set(
             "col0",
             new TypedValue()
                 .set("label", new TypedValue().setString("Label 0")).set(
-                    "value", new TypedValue().setString("Value 0"))).set(
+                "value", new TypedValue().setString("Value 0"))).set(
             "col1",
             new TypedValue()
                 .set("label", new TypedValue().setString("Label 1")).set(
-                    "value", new TypedValue().setString("Value1"))));
+                "value", new TypedValue().setString("Value1"))));
 
     gExpanded.put("textModule", textModule);
     gExpanded.put("linksModule", linksModule);
@@ -128,6 +127,7 @@ public class Generic {
 
   /**
    * Generate a Generic wallet object
+   *
    * @param issuerId
    * @param classId
    * @param objectId
@@ -151,7 +151,8 @@ public class Generic {
             "col0",
             new TypedValue().set("label",
                 new TypedValue().setString("Library Member")).set("value",
-                new TypedValue().setString("Joe Smith"))));
+                new TypedValue()
+                    .setString("Joe Smith"))));
 
     TypedValue objectInfoModule = new TypedValue();
 

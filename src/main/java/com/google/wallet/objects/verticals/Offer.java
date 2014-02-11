@@ -9,7 +9,6 @@ import com.google.api.services.walletobjects.model.*;
  * Generates an example Offer Class and Object
  *
  * @author pying
- *
  */
 public class Offer {
 
@@ -79,8 +78,10 @@ public class Offer {
     // Define Text Areas
     List<TextModuleData> textModulesData = new ArrayList<TextModuleData>();
 
-    TextModuleData details = new TextModuleData().setHeader("Details").setBody("20% off one cup of coffee at all Baconrista Coffee locations.  Only one can be used per visit.");
-    TextModuleData finePrint = new TextModuleData().setHeader("About Baconrista").setBody("Since 2013, Baconrista Coffee has been committed to making high quality bacon coffee. Visit us in our stores or online at www.baconrista.com");
+    TextModuleData details = new TextModuleData().setHeader("Details").setBody(
+        "20% off one cup of coffee at all Baconrista Coffee locations.  Only one can be used per visit.");
+    TextModuleData finePrint = new TextModuleData().setHeader("About Baconrista").setBody(
+        "Since 2013, Baconrista Coffee has been committed to making high quality bacon coffee. Visit us in our stores or online at www.baconrista.com");
 
     textModulesData.add(details);
     textModulesData.add(finePrint);

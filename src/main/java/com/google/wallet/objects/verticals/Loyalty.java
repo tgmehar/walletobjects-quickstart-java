@@ -22,7 +22,7 @@ public class Loyalty {
    * @return loyaltyObject
    */
   public static LoyaltyObject generateLoyaltyObject(String issuerId,
-                                                    String classId, String objectId) {
+      String classId, String objectId) {
     // Define Barcode
     Barcode barcode = new Barcode().setType("qrCode")
         .setValue("28343E3")
@@ -39,7 +39,8 @@ public class Loyalty {
     List<TextModuleData> textModulesData = new ArrayList<TextModuleData>();
     TextModuleData textModuleData = new TextModuleData()
         .setHeader("Jane's Baconrista Rewards")
-        .setBody("Save more at your local Mountain View store Jane.  You get 1 bacon fat latte for every 5 coffees purchased.  Also just for you, 10% off all pastries in the Mountain View store.");
+        .setBody(
+            "Save more at your local Mountain View store Jane.  You get 1 bacon fat latte for every 5 coffees purchased.  Also just for you, 10% off all pastries in the Mountain View store.");
     textModulesData.add(textModuleData);
 
     // Define Links Module Data
@@ -108,7 +109,7 @@ public class Loyalty {
    * @return loyaltyClass
    */
   public static LoyaltyClass generateLoyaltyClass(String issuerId,
-                                                  String classId) {
+      String classId) {
 
     // Define rendering templates per view
     List<RenderSpec> renderSpec = new ArrayList<RenderSpec>();
@@ -134,7 +135,8 @@ public class Loyalty {
     List<TextModuleData> textModulesData = new ArrayList<TextModuleData>();
 
     TextModuleData textModuleData = new TextModuleData().setHeader("Rewards details")
-        .setBody("Welcome to Baconrista rewards.  Enjoy your rewards for being a loyal customer.  10 points for ever dollar spent.  Redeem your points for free coffee, bacon and more!");
+        .setBody(
+            "Welcome to Baconrista rewards.  Enjoy your rewards for being a loyal customer.  10 points for ever dollar spent.  Redeem your points for free coffee, bacon and more!");
     textModulesData.add(textModuleData);
 
     // Define Links Module Data

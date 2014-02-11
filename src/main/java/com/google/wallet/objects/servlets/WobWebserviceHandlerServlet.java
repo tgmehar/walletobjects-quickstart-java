@@ -28,11 +28,10 @@ import com.google.wallet.objects.webservice.WebserviceResponse;
  * This servlet handles Webservice API requests and responds with an approved status and the object to insert.  To test this functionality -
  * upload this to your appengine instance, then in your merchant dashboard create a discoverable with the appengine app domain and /webservice as the path.
  * You can also use this service to debug since it logs all requests.
- *
+ * <p/>
  * To change the response to rejection, comment out the success response and uncomment the rejection portion.
  *
  * @author pying
- *
  */
 public class WobWebserviceHandlerServlet extends HttpServlet {
 
@@ -85,14 +84,14 @@ public class WobWebserviceHandlerServlet extends HttpServlet {
 
     // Handle signup and linking
     String responseCode = webRequest.getParams().getWalletUser().getFirstName();
-    WebserviceResponse.ResponseCode returnCode= null;
+    WebserviceResponse.ResponseCode returnCode = null;
 
-    for (WebserviceResponse.ResponseCode code: WebserviceResponse.ResponseCode.values()){
-      if(code.name().equalsIgnoreCase(responseCode)){
+    for (WebserviceResponse.ResponseCode code : WebserviceResponse.ResponseCode.values()) {
+      if (code.name().equalsIgnoreCase(responseCode)) {
         returnCode = code;
       }
     }
-    if (returnCode != null && returnCode.toString().contains("ERROR")){
+    if (returnCode != null && returnCode.toString().contains("ERROR")) {
       List<String> invalidWalletUserFields = new ArrayList<String>();
       invalidWalletUserFields.add("zipcode");
       invalidWalletUserFields.add("phone");

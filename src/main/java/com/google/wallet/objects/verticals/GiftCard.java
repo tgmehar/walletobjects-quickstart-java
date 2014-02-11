@@ -20,7 +20,6 @@ import com.google.api.services.walletobjects.model.Uri;
  * Class to generate example Loyalty class and objects
  *
  * @author mahues
- *
  */
 public class GiftCard {
 
@@ -36,9 +35,9 @@ public class GiftCard {
       String classId, String objectId) {
     // Define Barcode
     Barcode barcode = new Barcode().setType("qrCode")
-    		.setValue("28343E3")
-    		.setAlternateText("12345")
-    		.setLabel("User Id");
+        .setValue("28343E3")
+        .setAlternateText("12345")
+        .setLabel("User Id");
 
     Money balance = new Money();
     balance.setCurrencyCode("USD");
@@ -50,15 +49,15 @@ public class GiftCard {
     // Define Text Module Data
     List<TextModuleData> textModulesData = new ArrayList<TextModuleData>();
     TextModuleData textModuleData = new TextModuleData()
-    		.setHeader("Earn double points")
-    		.setBody("Jane, don't forget to use your Baconrista Rewards when " +
-                    "paying with this gift card to earn additional points");
+        .setHeader("Earn double points")
+        .setBody("Jane, don't forget to use your Baconrista Rewards when " +
+            "paying with this gift card to earn additional points");
     textModulesData.add(textModuleData);
 
     // Define Links Module Data
     List<Uri> uris = new ArrayList<Uri>();
     Uri uri1 = new Uri().setDescription("My Baconrista Gift Card Purchases")
-    		.setUri("http://www.baconrista.com/mybalance?id=1234567890");
+        .setUri("http://www.baconrista.com/mybalance?id=1234567890");
     uris.add(uri1);
     LinksModuleData linksModuleData = new LinksModuleData().setUris(uris);
 
@@ -100,9 +99,10 @@ public class GiftCard {
     List<TextModuleData> textModulesData = new ArrayList<TextModuleData>();
 
     TextModuleData textModuleData = new TextModuleData().setHeader("Where to Redeem")
-    		.setBody("All US gift cards are redeemable in any US and Puerto Rico " +
-                   "Baconrista retail locations, or online at Baconrista.com where" +
-    			   "available, for merchandise or services.");
+        .setBody(
+            "All US gift cards are redeemable in any US and Puerto Rico " +
+                "Baconrista retail locations, or online at Baconrista.com where" +
+                "available, for merchandise or services.");
     textModulesData.add(textModuleData);
 
     // Define Links Module Data

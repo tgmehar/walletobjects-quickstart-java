@@ -27,7 +27,6 @@ import com.google.wallet.objects.verticals.GiftCard;
  * Credentials are stored in web.xml which is why it needs ServletContext.
  *
  * @author pying
- *
  */
 @SuppressWarnings("serial")
 public class WobGenerateJwtServlet extends HttpServlet {
@@ -72,8 +71,8 @@ public class WobGenerateJwtServlet extends HttpServlet {
       payload.addObject(Offer.generateOfferObject(credentials.getIssuerId(),
           context.getInitParameter("OfferClassId"), context.getInitParameter("OfferObjectId")));
     } else if (type.equals("giftcard")) {
-        payload.addObject(GiftCard.generateGiftCardObject(credentials.getIssuerId(),
-            context.getInitParameter("GiftCardClassId"), context.getInitParameter("GiftCardObjectId")));
+      payload.addObject(GiftCard.generateGiftCardObject(credentials.getIssuerId(),
+          context.getInitParameter("GiftCardClassId"), context.getInitParameter("GiftCardObjectId")));
     } /*else if (type.equals("generic")) {
       payload.addObject(Generic.generateGenericObject(utils.getIssuerId(),
           "GenericClass", "GenericObject"));

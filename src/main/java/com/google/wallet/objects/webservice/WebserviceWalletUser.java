@@ -7,7 +7,6 @@ import java.util.List;
  * deserialization
  *
  * @author pying
- *
  */
 public class WebserviceWalletUser {
   String firstName;
@@ -36,8 +35,7 @@ public class WebserviceWalletUser {
   }
 
   /**
-   * @param firstName
-   *          the firstName to set
+   * @param firstName the firstName to set
    */
   public void setFirstName(String firstName) {
     this.firstName = firstName;
@@ -51,8 +49,7 @@ public class WebserviceWalletUser {
   }
 
   /**
-   * @param lastName
-   *          the lastName to set
+   * @param lastName the lastName to set
    */
   public void setLastName(String lastName) {
     this.lastName = lastName;
@@ -66,8 +63,7 @@ public class WebserviceWalletUser {
   }
 
   /**
-   * @param streetAddress
-   *          the streetAddress to set
+   * @param streetAddress the streetAddress to set
    */
   public void setAddressLine1(String addressLine2) {
     this.addressLine1 = addressLine2;
@@ -109,8 +105,7 @@ public class WebserviceWalletUser {
   }
 
   /**
-   * @param city
-   *          the city to set
+   * @param city the city to set
    */
   public void setCity(String city) {
     this.city = city;
@@ -124,8 +119,7 @@ public class WebserviceWalletUser {
   }
 
   /**
-   * @param state
-   *          the state to set
+   * @param state the state to set
    */
   public void setState(String state) {
     this.state = state;
@@ -139,8 +133,7 @@ public class WebserviceWalletUser {
   }
 
   /**
-   * @param zipcode
-   *          the zipcode to set
+   * @param zipcode the zipcode to set
    */
   public void setZipcode(String zipcode) {
     this.zipcode = zipcode;
@@ -154,8 +147,7 @@ public class WebserviceWalletUser {
   }
 
   /**
-   * @param country
-   *          the country to set
+   * @param country the country to set
    */
   public void setCountry(String country) {
     this.country = country;
@@ -169,8 +161,7 @@ public class WebserviceWalletUser {
   }
 
   /**
-   * @param email
-   *          the email to set
+   * @param email the email to set
    */
   public void setEmail(String email) {
     this.email = email;
@@ -184,8 +175,7 @@ public class WebserviceWalletUser {
   }
 
   /**
-   * @param phone
-   *          the phone to set
+   * @param phone the phone to set
    */
   public void setPhone(String phone) {
     this.phone = phone;
@@ -199,8 +189,7 @@ public class WebserviceWalletUser {
   }
 
   /**
-   * @param gender
-   *          the gender to set
+   * @param gender the gender to set
    */
   public void setGender(String gender) {
     this.gender = gender;
@@ -214,8 +203,7 @@ public class WebserviceWalletUser {
   }
 
   /**
-   * @param birthday
-   *          the birthday to set
+   * @param birthday the birthday to set
    */
   public void setBirthday(String birthday) {
     this.birthday = birthday;
@@ -229,8 +217,7 @@ public class WebserviceWalletUser {
   }
 
   /**
-   * @param userModifiedFields
-   *          the userModifiedFields to set
+   * @param userModifiedFields the userModifiedFields to set
    */
   public void setUserModifiedFields(List<String> userModifiedFields) {
     this.userModifiedFields = userModifiedFields;

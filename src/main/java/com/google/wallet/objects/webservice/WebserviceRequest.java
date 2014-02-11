@@ -5,7 +5,6 @@ package com.google.wallet.objects.webservice;
  * deserialization
  *
  * @author pying
- *
  */
 public class WebserviceRequest {
   String apiVersion;
@@ -23,8 +22,7 @@ public class WebserviceRequest {
   }
 
   /**
-   * @param apiVersion
-   *          the apiVersion to set
+   * @param apiVersion the apiVersion to set
    */
   public void setApiVersion(String apiVersion) {
     this.apiVersion = apiVersion;
@@ -38,8 +36,7 @@ public class WebserviceRequest {
   }
 
   /**
-   * @param method
-   *          the method to set
+   * @param method the method to set
    */
   public void setMethod(String method) {
     this.method = method;
@@ -53,8 +50,7 @@ public class WebserviceRequest {
   }
 
   /**
-   * @param params
-   *          the params to set
+   * @param params the params to set
    */
   public void setParams(WebserviceParams params) {
     this.params = params;

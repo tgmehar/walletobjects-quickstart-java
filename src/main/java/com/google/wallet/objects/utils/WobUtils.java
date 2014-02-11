@@ -39,7 +39,6 @@ import com.google.wallet.objects.webservice.WebserviceResponse;
  * generate JWTs for Save To Wallet and the Webservice API.
  *
  * @author pying
- *
  */
 public class WobUtils {
 

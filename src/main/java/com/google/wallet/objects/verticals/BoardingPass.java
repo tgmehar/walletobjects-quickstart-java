@@ -18,7 +18,6 @@ import java.util.List;
  * Class to generate example BoardingPass class and objects.
  *
  * @author pying
- *
  */
 public class BoardingPass {
 
@@ -61,7 +60,7 @@ public class BoardingPass {
         .setBarcode(barcode)
         .setMessages(messages)
 
-        // BoardingPassObject specific fields
+            // BoardingPassObject specific fields
         .setBoardingZone("2").setElectronicTicket(true)
         .setFreqFlierAccountId("31415927").setFreqFlierTierLevel("Gold")
         .setPassengerName(passengerName)
@@ -116,7 +115,7 @@ public class BoardingPass {
         .setMessages(messages)
         .setAllowMultipleUsersPerObject(true)
 
-        // BoardingPassClass specific fields
+            // BoardingPassClass specific fields
         .setAircraftType("737")
         .setArrivalAirportCode("SFO")
         .setArrivalCityName("San Francisco")
