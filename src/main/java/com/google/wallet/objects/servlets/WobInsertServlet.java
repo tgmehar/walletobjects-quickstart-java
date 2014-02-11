@@ -66,7 +66,7 @@ public class WobInsertServlet extends HttpServlet {
       OfferClass offerClass = Offer.generateOfferClass(credentials.getIssuerId(),
           context.getInitParameter("OfferClassId"));
       try {
-        response = client.offerclass().insert(offerClass).execute();
+        response = client.offerclass().insert(offerClass).set("strict","true").execute();
       } catch (IOException e) {
         e.printStackTrace();
       }
