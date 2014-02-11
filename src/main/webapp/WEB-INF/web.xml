@@ -41,11 +41,11 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
     </context-param>
     <context-param>
         <param-name>IssuerId</param-name>
-        <param-value>Your Issuer Id</param-value>
+        <param-value>YourIssuerId</param-value>
     </context-param>
   <context-param>
       <param-name>ApplicationName</param-name>
-      <param-value>Your Application Name</param-value>
+      <param-value>YourApplicationName</param-value>
   </context-param>
   <context-param>
       <param-name>LoyaltyClassId</param-name>
