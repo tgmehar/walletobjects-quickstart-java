@@ -27,19 +27,27 @@ public class Config {
     return config;
   }
 
-  public WobCredentials getCredentials(ServletContext context) throws IOException, GeneralSecurityException {
-    String key = context.getInitParameter("IssuerId") + context.getInitParameter("ServiceAccountPrivateKey");
+  public WobCredentials getCredentials(String serviceEmail, String privateKeyPath, String applicationName, String issuer)
+      throws IOException, GeneralSecurityException {
+    String key = issuer + privateKeyPath;
 
     WobCredentials credential = credentials.get(key);
 
     if (credential == null) {
       credential = new WobCredentials(
-          context.getInitParameter("ServiceAccountEmailAddress"),
-          context.getInitParameter("ServiceAccountPrivateKey"),
-          context.getInitParameter("ApplicationName"),
-          context.getInitParameter("IssuerId"));
+          serviceEmail,
+          privateKeyPath,
+          applicationName,
+          issuer
+      );
       credentials.put(key, credential);
     }
     return credential;
+  }
+  public WobCredentials getCredentials(ServletContext context) throws IOException, GeneralSecurityException {
+    return getCredentials(context.getInitParameter("ServiceAccountEmailAddress"),
+        context.getInitParameter("ServiceAccountPrivateKey"),
+        context.getInitParameter("ApplicationName"),
+        context.getInitParameter("IssuerId"));
   }
 }
